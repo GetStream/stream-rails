@@ -1,10 +1,30 @@
-module StreamRails
+require 'active_support'
+require 'action_view'
+require 'stream'
+require 'stream_rails/enrich'
+require 'stream_rails/logger'
 
+module StreamRails
+  extend ActiveSupport::Autoload
+
+  autoload :Activity
+  autoload :Config
+  autoload :FeedManager,  'stream_rails/feed_manager'
+  autoload :Renderable
   autoload :VERSION
+
+  def self.client
+    Stream::Client.new(self.config.api_key, self.config.api_secret)
+  end
 
   # Returns StreamRails's configuration object.
   def self.config
     @config ||= StreamRails::Config.new
+  end
+
+  # Returns StreamRails's configuration object.
+  def self.feed_manager
+    @feed_manager ||= StreamRails::FeedManager.new(self.client, self.config.feed_configs)
   end
 
   # Lets you set global configuration options.
@@ -22,3 +42,6 @@ module StreamRails
   end
 
 end
+
+require 'stream_rails/utils/view_helpers'
+require 'stream_rails/railtie' if defined?(Rails)

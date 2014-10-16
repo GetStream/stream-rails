@@ -1,24 +1,29 @@
-# -*- encoding: utf-8 -*-
-$:.push File.expand_path('../lib', __FILE__)
+$:.unshift File.expand_path('../lib', __FILE__)
 require 'stream_rails/version'
 
-Gem::Specification.new do |s|
-  s.name = 'stream_rails'
-  s.version = StreamRails::VERSION
-  s.platform = Gem::Platform::RUBY
-  s.authors = ["Tommaso Barbugli"]
-  s.email = "tbarbugli@gmail.com"
-  s.homepage = 'https://github.com/GetStream/stream-rails'
-  s.summary = ""
-  s.description = ""
+Gem::Specification.new do |gem|
+  gem.name = "stream_rails"
+  gem.version = StreamRails::VERSION
+  gem.platform = Gem::Platform::RUBY
+  gem.summary = "A gem that provides a client interface for getstream.io"
+  gem.email = "tbarbugli@gmail.com"
+  gem.homepage = "http://github.com/tbarbugli/stream-ruby"
+  gem.authors = ["Tommaso Barbugli"]
+  gem.has_rdoc = true
+  gem.extra_rdoc_files = ["README.md", "LICENSE"]
+  gem.files = Dir['lib/**/*']
+  gem.license = 'Apache-2.0'
 
-  s.files = `git ls-files lib`.split("\n") + ['Gemfile','Rakefile','README.md', 'MIT-LICENSE']
-  s.test_files = `git ls-files test`.split("\n")
-  s.require_paths = ['lib']
+  gem.required_ruby_version = '>= 1.9.2'
 
-  s.required_ruby_version = '>= 1.9.2'
+  gem.add_dependency 'actionpack', '>= 3.0.0'
+  gem.add_dependency 'railties', '>= 3.0.0'
+  gem.add_dependency 'stream-ruby', '~> 1.0.2'
+  gem.add_dependency 'activerecord', '>= 3.0.0'
 
-  if File.exists?('UPGRADING')
-    s.post_install_message = File.read("UPGRADING")
-  end
+  gem.add_development_dependency "rake"
+  gem.add_development_dependency "fakeweb"
+  gem.add_development_dependency "sqlite3"
+  gem.add_development_dependency "rspec", "~> 2.10"
+  gem.add_development_dependency "simplecov", "~> 0.7.1"
 end
