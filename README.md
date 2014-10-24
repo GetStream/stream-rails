@@ -3,8 +3,6 @@ stream_rails
 
 [![image](https://secure.travis-ci.org/GetStream/stream_rails.png?branch=master)](http://travis-ci.org/GetStream/stream_rails)
 
-[![Coverage Status](https://coveralls.io/repos/GetStream/stream_rails/badge.png?branch=master)](https://coveralls.io/r/GetStream/stream_rails?branch=master)
-
 
 This package helps you create activity streams & newsfeeds with Ruby on Rails and [GetStream.io](https://getstream.io).
 
