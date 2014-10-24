@@ -20,6 +20,20 @@ What you can build:
 
 ###Table of Contents
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [Activity Streams & Newsfeeds](#activity-streams-&-newsfeeds)
+- [Table of Contents](#table-of-contents)
+- [Gem installation](#gem-installation)
+- [Setup](#setup)
+- [Model configuration](#model-configuration)
+  - [Activity fields](#activity-fields)
+  - [Activity extra data](#activity-extra-data)
+- [Feed manager](#feed-manager)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ### Gem installation
 
 You can install ```stream_rails``` as you would any other gem:
