@@ -1,5 +1,5 @@
-stream_rails
-==========
+Stream Rails
+============
 
 [![image](https://secure.travis-ci.org/GetStream/stream_rails.png?branch=master)](http://travis-ci.org/GetStream/stream_rails)
 
