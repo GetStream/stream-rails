@@ -6,9 +6,11 @@ stream_rails
 
 This package helps you create activity streams & newsfeeds with Ruby on Rails and [GetStream.io](https://getstream.io).
 
-###What can you build?
+###Activity Streams & Newsfeeds
 
 ![](https://dvqg2dogggmn6.cloudfront.net/images/mood-home.png)
+
+What you can build:
 
 * Activity streams such as seen on Github
 * A twitter style newsfeed
