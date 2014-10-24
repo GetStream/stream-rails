@@ -205,7 +205,7 @@ StreamRails.feed_manager.follow_user(user_id, target_id)
 When you read data from feeds, a pin activity will look like this:
 
 ```json
-{'actor': 'User:1', 'verb': 'like', 'object': 'Pin:42'}
+{"actor": "User:1", "verb": "like", "object": "Pin:42"}
 ```
 
 This is far from ready for usage in your template. We call the process of loading the references from the database enrichment. An example is shown below:
