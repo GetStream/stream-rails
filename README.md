@@ -1,7 +1,7 @@
 Stream Rails
 ============
 
-[![image](https://secure.travis-ci.org/GetStream/stream_rails.png?branch=master)](http://travis-ci.org/GetStream/stream_rails)
+[![image](https://secure.travis-ci.org/GetStream/stream-rails.png?branch=master)](http://travis-ci.org/GetStream/stream-rails)
 
 
 This package helps you create activity streams & newsfeeds with Ruby on Rails and [GetStream.io](https://getstream.io).
