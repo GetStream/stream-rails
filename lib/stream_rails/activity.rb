@@ -72,7 +72,7 @@ module StreamRails
     end
 
     def activity_time
-      self.created_at
+      self.created_at.iso8601
     end
 
     def create_activity
