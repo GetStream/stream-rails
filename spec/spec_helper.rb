@@ -14,5 +14,7 @@ require 'active_record'
 ActiveRecord::Base.establish_connection(:adapter => "sqlite3",
                                        :database => ":memory:")
 
+ENV['STREAM_URL'] = 'https://key:secret.app_id=42'
+
 require 'stream'
 require 'stream_rails'

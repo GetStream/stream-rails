@@ -84,7 +84,7 @@ module StreamRails
         :time => self.activity_time,
       }
       if !self.activity_notify.nil?
-        activity[:to] = self.activity_notify.map{|f| f.feed_id}
+        activity[:to] = self.activity_notify.map{|f| f.id}
       end
       activity.merge(self.activity_extra_data)
     end

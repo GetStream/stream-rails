@@ -9,12 +9,12 @@ describe 'StreamRails::FeedManager' do
       let(:feed_manager) { StreamRails.feed_manager }
       specify { feed_manager.client.should be_an_instance_of Stream::Client }
       specify { feed_manager.get_user_feed(1).should be_an_instance_of Stream::Feed }
-      specify { feed_manager.get_user_feed(1).feed_id.should eq 'user:1' }
+      specify { feed_manager.get_user_feed(1).id.should eq 'user:1' }
       specify { feed_manager.get_news_feeds(1).should be_an_instance_of Hash }
       specify { feed_manager.get_news_feeds(1)[:flat].should be_an_instance_of Stream::Feed }
-      specify { feed_manager.get_news_feeds(1)[:flat].feed_id.should eq 'flat:1' }
+      specify { feed_manager.get_news_feeds(1)[:flat].id.should eq 'flat:1' }
       specify { feed_manager.get_news_feeds(1)[:aggregated].should be_an_instance_of Stream::Feed }
-      specify { feed_manager.get_news_feeds(1)[:aggregated].feed_id.should eq 'aggregated:1' }
+      specify { feed_manager.get_news_feeds(1)[:aggregated].id.should eq 'aggregated:1' }
       specify { feed_manager.get_notification_feed(1).should be_an_instance_of Stream::Feed }
       specify { feed_manager.get_feed('flat', 1).should be_an_instance_of Stream::Feed }
     end
