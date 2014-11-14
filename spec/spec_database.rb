@@ -13,6 +13,11 @@ class Article < BaseModel
 
   include StreamRails::Activity
   as_activity
+
+  def activity_object
+    self
+  end
+
 end
 
 class Tweet < BaseModel
@@ -23,6 +28,10 @@ class Tweet < BaseModel
       :parent_tweet => 1,
       :parent_author => 2
     }
+  end
+
+  def activity_object
+    self
   end
 
   def activity_notify
@@ -48,6 +57,10 @@ class Pin < BaseModel
 
   def activity_actor
     'cesar'
+  end
+
+  def activity_object
+    'non AR object'
   end
 
   include StreamRails::Activity

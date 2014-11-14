@@ -74,26 +74,24 @@ class Pin < ActiveRecord::Base
 
   include StreamRails::Activity
   as_activity
+
+  def activity_object
+    self.item
+  end
+
 end
 ```
 Everytime a Pin is created it will be stored in the feed of the user that created it, and when a Pin instance is deleted than it will get removed as well.
 
 ####Activity fields
 
-Models are stored in feeds as activities. An activity is composed of at least the following data fields: **actor**, **verb**, **object**, **time**. You can also add more custom data if needed.
+ActiveRecord models are stored in your feeds as activities; Activities are objects that tell the story of a person performing an action on or with an object, in its simplest form, an activity consists of an actor, a verb, and an object. In order for this to happen your models need to implement this methods:
 
-**object** is a reference to the model instance itself
-**actor** is a reference to the user attribute of the instance
-**verb** is a string representation of the class name
+**#activity_object** the object of the activity (eg. an AR model instance)
+**#activity_actor** the actor performing the activity (defaults to ```self.user```)
+**#activity_verb** the string representation of the verb (defaults to model class name)
 
-In order to work out-of-the-box, the Activity class makes makes few assumptions:
-
-1. the Model class belongs to a user
-2. the model table has timestamp columns (created_at is required)
-
-You can change this behaviour by overriding ```#activity_actor```.
-
-Below shows an example how to change your class if the model belongs to an author instead of to a user.
+Here's a more complete example of the Pin class:
 
 ```ruby
 class Pin < ActiveRecord::Base
@@ -105,6 +103,10 @@ class Pin < ActiveRecord::Base
 
   def activity_actor
     self.author
+  end
+
+  def activity_object
+    self.item
   end
 
 end
@@ -125,6 +127,10 @@ class Pin < ActiveRecord::Base
 
   def activity_extra_data
     {'is_retweet' => self.is_retweet}
+  end
+
+  def activity_object
+    self.item
   end
 
 end
@@ -184,6 +190,10 @@ class Pin < ActiveRecord::Base
     end
   end
 
+  def activity_object
+    self.item
+  end
+
 end
 ```
 
@@ -204,6 +214,10 @@ class Follow < ActiveRecord::Base
     [feed_manager.get_notification_feed(self.target_id)]
   end
 
+  def activity_object
+    self.target
+  end
+
 end
 ```
 
@@ -221,7 +235,7 @@ StreamRails.feed_manager.follow_user(user_id, target_id)
 When you read data from feeds, a pin activity will look like this:
 
 ```json
-{"actor": "User:1", "verb": "like", "object": "Pin:42"}
+{"actor": "User:1", "verb": "like", "object": "Item:42"}
 ```
 
 This is far from ready for usage in your template. We call the process of loading the references from the database enrichment. An example is shown below:

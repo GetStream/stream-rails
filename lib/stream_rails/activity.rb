@@ -52,12 +52,16 @@ module StreamRails
       StreamRails.create_reference(self.activity_actor)
     end
 
+    def activity_object
+      raise NotImplementedError, "Activity models must define `#activity_object`"
+    end
+
     def activity_verb
       self.class.model_name.to_s
     end
 
     def activity_object_id
-      StreamRails.create_reference(self)
+      StreamRails.create_reference(self.activity_object)
     end
 
     def activity_foreign_id
