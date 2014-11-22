@@ -31,7 +31,6 @@ describe 'StreamRails::FeedManager' do
           feed_manager.unfollow_user(1, 2)
           FakeWeb.last_request.method.should eq 'DELETE'
         }
-
     end
 
 end

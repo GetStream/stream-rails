@@ -22,10 +22,10 @@ describe StreamRails do
     end
 
     it "can be disabled" do
-      StreamRails.configure do |config|
-        config.enabled = false
-      end
+      StreamRails.enabled = false
       StreamRails.config.enabled.should eq false
+      StreamRails.enabled?.should eq false
+      StreamRails.enabled = true
     end
 
     it "should have default feed configs" do

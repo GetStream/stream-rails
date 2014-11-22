@@ -22,6 +22,19 @@ module StreamRails
     @config ||= StreamRails::Config.new
   end
 
+  # Switches StreamRails on or off.
+  # @param value [Boolean]
+  def self.enabled=(value)
+    StreamRails.config.enabled = value
+  end
+
+  # Returns `true` if StreamRails is on, `false` otherwise.
+  # Enabled by default.
+  # @return [Boolean]
+  def self.enabled?
+    !!StreamRails.config.enabled
+  end
+
   # Returns StreamRails's configuration object.
   def self.feed_manager
     @feed_manager ||= StreamRails::FeedManager.new(self.client, self.config.feed_configs)

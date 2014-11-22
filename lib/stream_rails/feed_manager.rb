@@ -47,14 +47,18 @@ module StreamRails
     end
 
     def created_activity(instance)
-      activity = instance.create_activity
-      feed = self.get_owner_feed(instance)
-      feed.add_activity(activity)
+      if StreamRails::enabled?
+        activity = instance.create_activity
+        feed = self.get_owner_feed(instance)
+        feed.add_activity(activity)
+      end
     end
 
     def destroyed_activity(instance)
-      feed = self.get_owner_feed(instance)
-      feed.remove(instance.activity_foreign_id, foreign_id=true)
+      if StreamRails::enabled?
+        feed = self.get_owner_feed(instance)
+        feed.remove(instance.activity_foreign_id, foreign_id=true)
+      end
     end
 
   end

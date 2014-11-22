@@ -287,4 +287,12 @@ eg. adds the extra_var to the partial scope
 <%= render_activity activity, :locals => {:extra_var => 42} %>
 ```
 
+### Disable model tracking
 
+You can disable model tracking (eg. when you run tests) via StreamRails.configure
+
+```
+require 'stream_rails'
+
+StreamRails.enabled = false
+```
