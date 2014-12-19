@@ -14,7 +14,12 @@ module StreamRails
   autoload :VERSION
 
   def self.client
-    Stream::Client.new(self.config.api_key, self.config.api_secret)
+    Stream::Client.new(
+      self.config.api_key,
+      self.config.api_secret,
+      self.config.api_site_id,
+      :location => self.config.location
+    )
   end
 
   # Returns StreamRails's configuration object.
@@ -48,6 +53,7 @@ module StreamRails
   #     config.api_key     = "key"
   #     config.api_secret  = "secret"
   #     config.api_site_id = "42"
+  #     config.location    = "us-east"
   #     config.enabled     = true
   #   end
   def self.configure(&block)

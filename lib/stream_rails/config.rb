@@ -3,6 +3,7 @@ module StreamRails
   class Config
     attr_accessor :api_key
     attr_accessor :api_secret
+    attr_accessor :location
     attr_accessor :api_site_id
     attr_accessor :enabled
     
