@@ -75,6 +75,18 @@ describe 'StreamRails::Enrich' do
       enriched[2]['activities'].length.should eq agg3['activities'].length
     end
 
+    it "enrich partially missing fields" do
+      a1 = create_article
+      a2 = create_article
+      custom_enricher = StreamRails::Enrich.new([:missing])
+      activities = [a1, a2].map{|a| a.create_activity}
+      activities[0][:missing] = StreamRails.create_reference(@tom)
+      activities[1][:missing] = nil
+      enriched = custom_enricher.enrich_activities(activities)
+      enriched[0][:missing].should eq @tom
+      enriched[1][:missing].should eq nil
+    end
+
   end
 
 end

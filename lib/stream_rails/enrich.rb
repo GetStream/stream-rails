@@ -36,6 +36,9 @@ module StreamRails
     end
 
     def model_field?(field_value)
+      if !field_value.respond_to?("split")
+        return false
+      end
       bits = field_value.split(':')
       if bits.length < 2
         return false
