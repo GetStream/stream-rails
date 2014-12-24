@@ -3,3 +3,17 @@ rvm:
   - 2.1.0
   - 2.0.0
   - 1.9.3
+matrix:
+  include:
+    - rvm: 2.1.0
+      gemfile: gemfiles/Gemfile.rails-3.X
+    - rvm: 2.0.0
+      gemfile: gemfiles/Gemfile.rails-3.X
+    - rvm: 1.9.3
+      gemfile: gemfiles/Gemfile.rails-3.X
+    - rvm: 1.9.3
+      gemfile: gemfiles/Gemfile.rails-4.0
+    - rvm: 2.0.0
+      gemfile: gemfiles/Gemfile.rails-4.0
+    - rvm: 2.1.0
+      gemfile: gemfiles/Gemfile.rails-4.0
