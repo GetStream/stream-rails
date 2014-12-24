@@ -1,3 +1,5 @@
+require 'logger'
+
 module StreamRails
   class << self
     attr_accessor :logger

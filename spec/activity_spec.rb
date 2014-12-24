@@ -26,7 +26,7 @@ describe 'activity class implementations' do
     instance = @activity_model.new()
     instance.user = User.new
     instance.save!
-    instance.destroy!
+    instance.destroy
   end
 
   def build_activity
