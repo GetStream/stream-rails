@@ -18,6 +18,10 @@ What you can build:
 * Facebook style newsfeeds
 * A notification system
 
+### Demo
+
+You can check out our example app built using this library on Github [https://github.com/GetStream/Stream-Example-Ruby](https://github.com/GetStream/Stream-Example-Ruby)
+
 ###Table of Contents
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
