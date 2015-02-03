@@ -20,7 +20,7 @@ What you can build:
 
 ### Demo
 
-You can check out our example app built using this library on Github [https://github.com/GetStream/Stream-Example-Ruby](https://github.com/GetStream/Stream-Example-Ruby)
+You can check out our example app built using this library on Github [https://github.com/GetStream/Stream-Example-Rails](https://github.com/GetStream/Stream-Example-Rails)
 
 ###Table of Contents
 
