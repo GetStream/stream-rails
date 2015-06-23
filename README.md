@@ -85,7 +85,7 @@ class Pin < ActiveRecord::Base
 
 end
 ```
-Everytime a Pin is created it will be stored in the feed of the user that created it, and when a Pin instance is deleted than it will get removed as well.
+Everytime a Pin is created it will be stored in the feed of the user that created it.  When a Pin instance is deleted, the feed will be removed as well.
 
 ####Activity fields
 
@@ -150,8 +150,8 @@ feed = StreamRails.feed_manager.get_user_feed(current_user.id)
 
 ####Feeds bundled with feed_manager
 
-To get you started the manager has 4 feeds pre configured. You can add more feeds if your application needs it.
-Feeds are divided in three categories.
+To get you started the manager has 4 feeds pre-configured. You can add more feeds if your application requires it.
+Feeds are divided into three categories.
 
 #####User feed:
 The user feed stores all activities for a user. Think of it as your personal Facebook page. You can easily get this feed from the manager.
@@ -160,7 +160,7 @@ feed = StreamRails.feed_manager.get_user_feed(current_user.id)
 ```
 
 #####News feeds:
-The news feeds store the activities from the people you follow.
+News feeds store activities from the people you follow.
 There is both a flat newsfeed (similar to twitter) and an aggregated newsfeed (like facebook).
 
 ```php
@@ -226,7 +226,7 @@ end
 ```
 
 ####Follow a feed
-The create the newsfeeds you need to notify the system about follow relationships. The manager comes with APIs to let a user's news feeds follow another user's feed. This code lets the current user's flat and aggregated feeds follow the target_user's personal feed.
+This is how you create the newsfeeds you need to notify the system about follow relationships. The manager comes with APIs to let a user's news feed follow another user's feed. This code lets the current user's flat and aggregated feeds follow the target_user's personal feed.
 
 ```
 StreamRails.feed_manager.follow_user(user_id, target_id)
@@ -255,7 +255,7 @@ activities = enricher.enrich_activities(results)
 ####Templating
 
 Now that you've enriched the activities you can render them in a view.
-For convenience we includes a basic view:
+For convenience we include a basic view:
 
 ```
 <div class="container">
