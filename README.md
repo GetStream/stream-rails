@@ -61,6 +61,7 @@ require 'stream_rails'
 StreamRails.configure do |config|
   config.api_key     = "YOUR API KEY"
   config.api_secret  = "YOUR API SECRET"
+  config.timeout     = 30
 end
 ```
 

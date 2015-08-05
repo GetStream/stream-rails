@@ -6,6 +6,7 @@ module StreamRails
     attr_accessor :location
     attr_accessor :api_site_id
     attr_accessor :enabled
+    attr_accessor :timeout
     
     attr_accessor :news_feeds
     attr_accessor :notification_feed
@@ -16,6 +17,7 @@ module StreamRails
       @news_feeds = {:flat=>'flat', :aggregated=>'aggregated'}
       @notification_feed  = 'notification'
       @user_feed  = 'user'
+      @timeout = 3
     end
 
     def feed_configs

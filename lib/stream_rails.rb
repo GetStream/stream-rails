@@ -18,7 +18,8 @@ module StreamRails
       self.config.api_key,
       self.config.api_secret,
       self.config.api_site_id,
-      :location => self.config.location
+      :location => self.config.location,
+      :default_timeout => self.config.timeout
     )
   end
 
