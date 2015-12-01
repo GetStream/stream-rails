@@ -5,7 +5,7 @@ module StreamRails
 
   class << self
     def create_reference(record)
-      if record.is_a? ActiveRecord::Base or record.is_a? Sequel::Model
+      if record.is_a? ActiveRecord::Base or (Object.const_defined?("Sequel") and record.is_a? Sequel::Model)
         "#{record.class.model_name}:#{record.id}"
       else
         record.to_s unless record.nil?
