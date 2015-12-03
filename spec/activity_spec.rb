@@ -20,7 +20,6 @@ describe 'activity class implementations' do
     instance.should respond_to(:activity_notify)
     instance.should respond_to(:activity_extra_data)
     instance.should respond_to(:activity_should_sync?)
-    instance.should respond_to(:activity_should_sync=)
     instance.should respond_to(:create_activity)
   end
 

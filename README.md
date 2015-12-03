@@ -144,8 +144,8 @@ end
 
 ####Activity creation
 
-If you want to control when to create an activity you can use the
-```#activity_should_sync=``` call in your model.
+If you want to control when to create an activity you should implement
+the ```#activity_should_sync?``` method in your model.
 
 ```ruby
 class Pin < ActiveRecord::Base
@@ -155,8 +155,8 @@ class Pin < ActiveRecord::Base
   include StreamRails::Activity
   as_activity
 
-  def activity_should_sync
-    false
+  def activity_should_sync?
+    self.published
   end
 
   def activity_object
@@ -166,15 +166,7 @@ class Pin < ActiveRecord::Base
 end
 ```
 
-This will not create an activity after creating a `Pin` object.
-
-You can specify when to create an object like this:
-
-```ruby
-p = Pin.new
-p.activity_should_sync = true
-p.save
-```
+This will create an activity only when `self.published` is true.
 
 ###Feed manager
 
