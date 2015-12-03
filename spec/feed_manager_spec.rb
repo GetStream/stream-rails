@@ -11,7 +11,15 @@ describe 'StreamRails::FeedManager' do
       let(:feed_manager) { StreamRails.feed_manager }
       describe "#created_activity" do
         let(:instance) { Article.new }
-        specify { expect(instance).to_not receive(:create_activity); feed_manager.created_activity(instance) }
+        it "should not create activity" do
+          instance.class_eval do
+            def activity_should_sync?
+              false
+            end
+          end
+          expect(instance).to_not receive(:create_activity)
+          feed_manager.created_activity(instance)
+        end
       end
     end
 
