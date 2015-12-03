@@ -34,7 +34,7 @@ You can check out our example app built using this library on Github [https://gi
 - [Model configuration](#model-configuration)
   - [Activity fields](#activity-fields)
   - [Activity extra data](#activity-extra-data)
-  - [Activity creation](#activity-extra-data)
+  - [Activity creation](#activity-creation)
 - [Feed manager](#feed-manager)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
