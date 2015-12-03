@@ -31,6 +31,7 @@ module StreamRails
   end
 
   module Activity
+    @should_sync = true
 
     def self.included base
       base.extend ClassMethods
@@ -77,6 +78,18 @@ module StreamRails
 
     def activity_time
       self.created_at.iso8601
+    end
+
+    def activity_should_sync
+      @should_sync
+    end
+
+    def activity_should_sync?
+      self.activity_should_sync
+    end
+
+    def activity_should_sync=(value)
+      @should_sync = value
     end
 
     def create_activity

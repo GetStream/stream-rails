@@ -34,6 +34,7 @@ You can check out our example app built using this library on Github [https://gi
 - [Model configuration](#model-configuration)
   - [Activity fields](#activity-fields)
   - [Activity extra data](#activity-extra-data)
+  - [Activity creation](#activity-extra-data)
 - [Feed manager](#feed-manager)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -139,6 +140,40 @@ class Pin < ActiveRecord::Base
   end
 
 end
+```
+
+####Activity creation
+
+If you want to control when to create an activity you can use the
+```#activity_should_sync=``` call in your model.
+
+```ruby
+class Pin < ActiveRecord::Base
+  belongs_to :author
+  belongs_to :item
+
+  include StreamRails::Activity
+  as_activity
+
+  def activity_should_sync
+    false
+  end
+
+  def activity_object
+    self.item
+  end
+
+end
+```
+
+This will not create an activity after creating a `Pin` object.
+
+You can specify when to create an object like this:
+
+```ruby
+p = Pin.new
+p.activity_should_sync = true
+p.save
 ```
 
 ###Feed manager
