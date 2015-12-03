@@ -37,7 +37,7 @@ module StreamRails
     end
 
     def activity_owner_id
-      self.user_id
+      self.activity_actor.id
     end
 
     def activity_actor
