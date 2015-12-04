@@ -35,6 +35,7 @@ You can check out our example app built using this library on Github [https://gi
   - [Activity fields](#activity-fields)
   - [Activity extra data](#activity-extra-data)
 - [Feed manager](#feed-manager)
+- [Running specs](#running-specs)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -300,4 +301,12 @@ You can disable model tracking (eg. when you run tests) via StreamRails.configur
 require 'stream_rails'
 
 StreamRails.enabled = false
+```
+
+###Running specs
+
+From the project root directory:
+
+```
+./bin/run_tests.sh
 ```
