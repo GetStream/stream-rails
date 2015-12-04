@@ -1,9 +1,27 @@
 require 'spec_helper'
+require 'spec_database'
 require 'json'
 
 
 describe 'StreamRails::FeedManager' do
+
     subject { feed_manager }
+
+    context "when instance should not sync" do
+      let(:feed_manager) { StreamRails.feed_manager }
+      describe "#created_activity" do
+        let(:instance) { Article.new }
+        it "should not create activity" do
+          instance.class_eval do
+            def activity_should_sync?
+              false
+            end
+          end
+          expect(instance).to_not receive(:create_activity)
+          feed_manager.created_activity(instance)
+        end
+      end
+    end
 
     context "instance from StreamRails" do
       let(:feed_manager) { StreamRails.feed_manager }

@@ -37,6 +37,7 @@ You can check out our example app built using this library on Github [https://gi
 - [Model configuration](#model-configuration)
   - [Activity fields](#activity-fields)
   - [Activity extra data](#activity-extra-data)
+  - [Activity creation](#activity-creation)
 - [Feed manager](#feed-manager)
 - [Running specs](#running-specs)
 
@@ -178,6 +179,32 @@ class Pin < ActiveRecord::Base
 
 end
 ```
+
+####Activity creation
+
+If you want to control when to create an activity you should implement
+the ```#activity_should_sync?``` method in your model.
+
+```ruby
+class Pin < ActiveRecord::Base
+  belongs_to :author
+  belongs_to :item
+
+  include StreamRails::Activity
+  as_activity
+
+  def activity_should_sync?
+    self.published
+  end
+
+  def activity_object
+    self.item
+  end
+
+end
+```
+
+This will create an activity only when `self.published` is true.
 
 ###Feed manager
 

@@ -79,6 +79,10 @@ module StreamRails
       self.created_at.iso8601
     end
 
+    def activity_should_sync?
+      true
+    end
+
     def create_activity
       activity = {
         :actor => self.activity_actor_id,
