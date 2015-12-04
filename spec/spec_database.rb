@@ -66,3 +66,27 @@ class Pin < BaseModel
   include StreamRails::Activity
   as_activity :sync_policy => CustomPolicy
 end
+
+require 'sequel'
+SEQUEL_DB = Sequel.sqlite
+
+unless SEQUEL_DB.table_exists?(:sequel_articles)
+  SEQUEL_DB.create_table(:sequel_articles) do
+    primary_key :id
+    Integer :user_id
+    String :title
+    String :body
+  end
+end
+
+class SequelArticle < Sequel::Model
+  include StreamRails::Activity
+  as_activity
+
+  many_to_one :user
+
+  def activity_object
+    self
+  end
+end
+SequelArticle.db = SEQUEL_DB

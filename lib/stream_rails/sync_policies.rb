@@ -7,7 +7,7 @@ module StreamRails
       def self.included(base)
         if base.respond_to? :after_commit
           base.after_commit :add_to_feed, on: :create
-        elsif Object.const_defined?("Sequel") and base.is_a? Sequel::Model
+        elsif Object.const_defined?("Sequel") and base < Sequel::Model
           base.class_eval do
             define_method(:_after_create) do |*args|
               super(*args)
@@ -35,11 +35,11 @@ module StreamRails
       def self.included(base)
         if base.respond_to? :after_commit
           base.after_commit :remove_from_feed, on: :destroy
-        elsif Object.const_defined?("Sequel") and base.is_a? Sequel::Model
+        elsif Object.const_defined?("Sequel") and base < Sequel::Model
           base.instance_eval do
-            define_method(:_before_destroy) do |*args|
-              super(*args)
+            define_method(:before_destroy) do |*args|
               remove_from_feed
+              super(*args)
             end
           end
         else
