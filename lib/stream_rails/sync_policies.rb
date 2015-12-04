@@ -5,7 +5,11 @@ module StreamRails
     module SyncCreate
 
       def self.included(base)
-        base.after_commit :add_to_feed, on: :create
+        if base.respond_to? :after_commit
+          base.after_commit :add_to_feed, on: :create
+        else
+          base.after_create :add_to_feed
+        end
       end
 
       private
@@ -22,7 +26,11 @@ module StreamRails
     module SyncDestroy
 
       def self.included(base)
-        base.after_commit :remove_from_feed, on: :destroy
+        if base.respond_to? :after_commit
+          base.after_commit :remove_from_feed, on: :destroy
+        else
+          base.after_destroy :remove_from_feed
+        end
       end
 
       private
