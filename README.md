@@ -31,6 +31,9 @@ You can check out our example app built using this library on Github [https://gi
 - [Table of Contents](#table-of-contents)
 - [Gem installation](#gem-installation)
 - [Setup](#setup)
+- [Supported ORMs](#supported-orms)
+  - [ActiveRecord](#active-record)
+  - [Sequel](#sequel)
 - [Model configuration](#model-configuration)
   - [Activity fields](#activity-fields)
   - [Activity extra data](#activity-extra-data)
@@ -63,6 +66,40 @@ StreamRails.configure do |config|
   config.api_key     = "YOUR API KEY"
   config.api_secret  = "YOUR API SECRET"
   config.timeout     = 30
+end
+```
+
+###Supported ORMs
+
+####ActiveRecord
+
+The integration will look as follows:
+
+```ruby
+class Pin < ActiveRecord::Base
+  include StreamRails::Activity
+  as_activity
+
+  def activity_object
+    self.item
+  end
+end
+```
+
+####Sequel
+
+Please, use Sequel `~4`.
+
+The integration will look as follows:
+
+```ruby
+class Pin < Sequel::Model
+  include StreamRails::Activity
+  as_activity
+
+  def activity_object
+    self.item
+  end
 end
 ```
 
