@@ -7,13 +7,15 @@ module StreamRails
       def self.included(base)
         if base.respond_to? :after_commit
           base.after_commit :add_to_feed, on: :create
-        else
+        elsif Object.const_defined?("Sequel") and base.is_a? Sequel::Model
           base.class_eval do
             define_method(:_after_create) do |*args|
               super(*args)
               add_to_feed
             end
           end
+        else
+          raise "Your ORM is not supported"
         end
       end
 
@@ -33,13 +35,15 @@ module StreamRails
       def self.included(base)
         if base.respond_to? :after_commit
           base.after_commit :remove_from_feed, on: :destroy
-        else
+        elsif Object.const_defined?("Sequel") and base.is_a? Sequel::Model
           base.instance_eval do
             define_method(:_before_destroy) do |*args|
               super(*args)
               remove_from_feed
             end
           end
+        else
+          raise "Your ORM is not supported"
         end
       end
 
