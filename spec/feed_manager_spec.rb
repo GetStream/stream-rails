@@ -38,6 +38,7 @@ describe 'StreamRails::FeedManager' do
     end
 
     context "follow and unfollow" do
+      context "StreamRails enabled" do
         let(:feed_manager) { StreamRails.feed_manager }
 
         specify {
@@ -49,6 +50,21 @@ describe 'StreamRails::FeedManager' do
           feed_manager.unfollow_user(1, 2)
           FakeWeb.last_request.method.should eq 'DELETE'
         }
+      end
+
+      context "StreamRails disabled" do
+        let(:feed_manager) { StreamRails.feed_manager }
+
+        it "should not call follow/unfollow API" do
+          StreamRails.enabled = false
+
+          feed_manager.should_not receive(:get_feed)
+          feed_manager.follow_user(1, 2)
+
+          feed_manager.should_not receive(:get_feed)
+          feed_manager.unfollow_user(1, 2)
+        end
+      end
     end
 
 end
