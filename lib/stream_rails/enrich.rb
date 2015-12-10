@@ -61,7 +61,7 @@ module StreamRails
       aggregated_activities.each do |aggregated|
         aggregated['activities'] = inject_objects(aggregated['activities'], objects)
       end
-      aggregated_activities.map { |a| ActivityResult.new.from_activity(a) }
+      create_activity_results(aggregated_activities)
     end
 
     def collect_references(activities)
@@ -81,18 +81,20 @@ module StreamRails
     end
 
     def inject_objects(activities, objects)
-      activities = activities.map { |a| ActivityResult.new.from_activity(a) }
-      activities.each do |activity|
+      create_activity_results(activities).each do |activity|
         activity.select { |k, _v| @fields.include? k.to_sym }.each do |field, value|
           next unless self.model_field?(value)
           model, id = value.split(':')
           activity[field] = objects[model][id] || value
-          if objects[model][id].nil?
-            activity.track_not_enriched_field(field, value)
-          end
+          activity.track_not_enriched_field(field, value) if objects[model][id].nil?
         end
       end
-      activities
+    end
+
+    private
+
+    def create_activity_results(activities)
+      return activities.map { |a| ActivityResult.new.from_activity(a) }
     end
   end
 end

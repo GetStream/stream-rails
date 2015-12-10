@@ -49,7 +49,7 @@ module StreamRails
     end
 
     def created_activity(instance)
-      return unless StreamRails.enabled?
+      return unless StreamRails.enabled? && instance.activity_should_sync?
       activity = instance.create_activity
       feed = get_owner_feed(instance)
       feed.add_activity(activity)

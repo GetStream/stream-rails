@@ -38,7 +38,7 @@ module StreamRails
   # Enabled by default.
   # @return [Boolean]
   def self.enabled?
-    !!StreamRails.config.enabled
+    StreamRails.config.enabled
   end
 
   # Returns StreamRails's configuration object.

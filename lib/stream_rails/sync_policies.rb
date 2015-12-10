@@ -20,7 +20,7 @@ module StreamRails
 
       def add_to_feed
         StreamRails.feed_manager.created_activity(self)
-      rescue Exception => e
+      rescue StandardError => e
         StreamRails.logger.error "Something went wrong creating an activity: #{e}"
         raise
       end
@@ -46,7 +46,7 @@ module StreamRails
 
       def remove_from_feed
         StreamRails.feed_manager.destroyed_activity(self)
-      rescue Exception => e
+      rescue StandardError => e
         StreamRails.logger.error "Something went wrong deleting an activity: #{e}"
         raise
       end

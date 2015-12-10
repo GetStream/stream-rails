@@ -35,13 +35,13 @@ module StreamRails
       end
 
       def layout_path(path = nil, root = nil)
-        path.nil? and return
+        path.nil? && return
         root ||= 'layouts'
         select_path path, root
       end
 
       def partial_path(activity, aggregated, prefix = '', path = nil, root = nil)
-        root ||= (if aggregated then 'aggregated_activity' else 'activity' end)
+        root ||= (aggregated ? 'aggregated_activity' : 'activity')
         path ||= "#{activity['verb']}".downcase
         path = "#{prefix}_#{path}" if prefix
         select_path path, root
