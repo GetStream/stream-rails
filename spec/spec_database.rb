@@ -10,14 +10,12 @@ class BaseModel < ActiveRecord::Base
 end
 
 class Article < BaseModel
-
   include StreamRails::Activity
   as_activity
 
   def activity_object
     self
   end
-
 end
 
 class Tweet < BaseModel
@@ -25,8 +23,8 @@ class Tweet < BaseModel
 
   def activity_extra_data
     {
-      :parent_tweet => 1,
-      :parent_author => 2
+      parent_tweet: 1,
+      parent_author: 2
     }
   end
 
@@ -39,22 +37,19 @@ class Tweet < BaseModel
   end
 
   include StreamRails::Activity
-  as_activity :track_deletes => false
+  as_activity track_deletes: false
 end
 
 module CustomPolicy
-
   def self.included(base)
     base.before_create :custom_save
   end
 
   def custom_save
   end
-
 end
 
 class Pin < BaseModel
-
   def activity_actor
     'cesar'
   end
@@ -64,7 +59,7 @@ class Pin < BaseModel
   end
 
   include StreamRails::Activity
-  as_activity :sync_policy => CustomPolicy
+  as_activity sync_policy: CustomPolicy
 end
 
 require 'sequel'

@@ -9,17 +9,17 @@ module StreamRails
 
   autoload :Activity
   autoload :Config
-  autoload :FeedManager,  'stream_rails/feed_manager'
+  autoload :FeedManager, 'stream_rails/feed_manager'
   autoload :Renderable
   autoload :VERSION
 
   def self.client
     Stream::Client.new(
-      self.config.api_key,
-      self.config.api_secret,
-      self.config.api_site_id,
-      :location => self.config.location,
-      :default_timeout => self.config.timeout
+      config.api_key,
+      config.api_secret,
+      config.api_site_id,
+      location: config.location,
+      default_timeout: config.timeout
     )
   end
 
@@ -38,12 +38,12 @@ module StreamRails
   # Enabled by default.
   # @return [Boolean]
   def self.enabled?
-    !!StreamRails.config.enabled
+    StreamRails.config.enabled
   end
 
   # Returns StreamRails's configuration object.
   def self.feed_manager
-    @feed_manager ||= StreamRails::FeedManager.new(self.client, self.config.feed_configs)
+    @feed_manager ||= StreamRails::FeedManager.new(client, config.feed_configs)
   end
 
   # Lets you set global configuration options.
@@ -57,10 +57,9 @@ module StreamRails
   #     config.location    = "us-east"
   #     config.enabled     = true
   #   end
-  def self.configure(&block)
+  def self.configure(&_block)
     yield(config) if block_given?
   end
-
 end
 
 require 'stream_rails/utils/view_helpers'

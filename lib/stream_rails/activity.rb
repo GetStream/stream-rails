@@ -2,10 +2,9 @@ require 'active_record'
 require 'stream_rails/sync_policies'
 
 module StreamRails
-
   class << self
     def create_reference(record)
-      if record.is_a? ActiveRecord::Base or (Object.const_defined?("Sequel") and record.is_a? Sequel::Model)
+      if record.is_a?(ActiveRecord::Base) || (Object.const_defined?('Sequel') && record.is_a?(Sequel::Model))
         "#{record.class.model_name}:#{record.id}"
       else
         record.to_s unless record.nil?
@@ -14,34 +13,29 @@ module StreamRails
   end
 
   module ClassMethods
-
     def as_activity(opts = {})
-      default_opts = {:track_deletes => true, :sync_policy => nil}
+      default_opts = { track_deletes: true, sync_policy: nil }
       options = default_opts.merge(opts)
       if options[:sync_policy].nil?
         include StreamRails::SyncPolicy::SyncCreate
-        if options[:track_deletes]
-          include StreamRails::SyncPolicy::SyncDestroy
-        end
+        include StreamRails::SyncPolicy::SyncDestroy if options[:track_deletes]
       else
         include options[:sync_policy]
       end
     end
-
   end
 
   module Activity
-
-    def self.included base
+    def self.included(base)
       base.extend ClassMethods
     end
 
     def activity_owner_id
-      self.activity_actor.id
+      activity_actor.id
     end
 
     def activity_actor
-      self.user
+      user
     end
 
     def activity_owner_feed
@@ -49,11 +43,11 @@ module StreamRails
     end
 
     def activity_actor_id
-      StreamRails.create_reference(self.activity_actor)
+      StreamRails.create_reference(activity_actor)
     end
 
     def activity_object
-      raise NotImplementedError, "Activity models must define `#activity_object`"
+      fail NotImplementedError, 'Activity models must define `#activity_object`'
     end
 
     def activity_verb
@@ -61,7 +55,7 @@ module StreamRails
     end
 
     def activity_object_id
-      StreamRails.create_reference(self.activity_object)
+      StreamRails.create_reference(activity_object)
     end
 
     def activity_foreign_id
@@ -76,7 +70,7 @@ module StreamRails
     end
 
     def activity_time
-      self.created_at.iso8601
+      created_at.iso8601
     end
 
     def activity_should_sync?
@@ -85,17 +79,14 @@ module StreamRails
 
     def create_activity
       activity = {
-        :actor => self.activity_actor_id,
-        :verb => self.activity_verb,
-        :object => self.activity_object_id,
-        :foreign_id => self.activity_foreign_id,
-        :time => self.activity_time,
+        actor: activity_actor_id,
+        verb: activity_verb,
+        object: activity_object_id,
+        foreign_id: activity_foreign_id,
+        time: activity_time
       }
-      if !self.activity_notify.nil?
-        activity[:to] = self.activity_notify.map{|f| f.id}
-      end
-      activity.merge(self.activity_extra_data)
+      activity[:to] = activity_notify.map(&:id) unless activity_notify.nil?
+      activity.merge(activity_extra_data)
     end
-
   end
 end
