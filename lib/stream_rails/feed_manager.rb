@@ -27,18 +27,22 @@ module StreamRails
     end
 
     def follow_user(user_id, target_id)
-      target_feed = self.get_user_feed(target_id)
-      @news_feeds.each do |_, feed|
-        news_feed = self.get_feed(feed, user_id)
-        news_feed.follow(target_feed.slug, target_feed.user_id)
+      if StreamRails::enabled?
+        target_feed = self.get_user_feed(target_id)
+        @news_feeds.each do |_, feed|
+          news_feed = self.get_feed(feed, user_id)
+          news_feed.follow(target_feed.slug, target_feed.user_id)
+        end
       end
     end
 
     def unfollow_user(user_id, target_id)
-      target_feed = self.get_user_feed(target_id)
-      @news_feeds.each do |_, feed|
-        news_feed = self.get_feed(feed, user_id)
-        news_feed.unfollow(target_feed.slug, target_feed.user_id)
+      if StreamRails::enabled?
+        target_feed = self.get_user_feed(target_id)
+        @news_feeds.each do |_, feed|
+          news_feed = self.get_feed(feed, user_id)
+          news_feed.unfollow(target_feed.slug, target_feed.user_id)
+        end
       end
     end
 
