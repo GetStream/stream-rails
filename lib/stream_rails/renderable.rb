@@ -1,11 +1,9 @@
 module StreamRails
   # Provides logic for rendering activities. (different templates per activity verb).
   module Renderable
-
     class << self
-
       def render(activity, context, params = {})
-        aggregated = activity.has_key? 'activities'
+        aggregated = activity.key? 'activities'
         partial = partial_path(activity, aggregated, *params.values_at(:prefix, :partial, :partial_root))
         layout  = layout_path(*params.values_at(:layout, :layout_root))
         locals  = prepare_locals(activity, params)
@@ -27,7 +25,7 @@ module StreamRails
       end
 
       def render_aggregated(activity, context, params)
-        if !activity['activities'].map {|a| !a.enriched?}.all?
+        if !activity['activities'].map { |a| !a.enriched? }.all?
           context.render params
         else
           first_activity = activity['activities'][0]
@@ -50,17 +48,17 @@ module StreamRails
       end
 
       def prepare_locals(activity, params)
-        locals = params.delete(:locals) || Hash.new
+        locals = params.delete(:locals) || {}
         locals.merge\
           activity:     activity,
           parameters:   params
       end
 
       private
-      def select_path path, root
+
+      def select_path(path, root)
         [root, path].map(&:to_s).join('/')
       end
     end
   end
-
 end
