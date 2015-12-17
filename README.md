@@ -39,6 +39,11 @@ You can check out our example app built using this library on Github [https://gi
   - [Activity extra data](#activity-extra-data)
   - [Activity creation](#activity-creation)
 - [Feed manager](#feed-manager)
+- [Showing the newsfeed](#showing-the-newsfeed)
+  - [Activity enrichment](#activity-enrichment)
+  - [Templating](#templating)
+  - [Pagination](#pagination)
+- [Disable model tracking](#disable-model-tracking)
 - [Running specs](#running-specs)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
