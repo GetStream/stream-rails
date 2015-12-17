@@ -357,6 +357,16 @@ eg. adds the extra_var to the partial scope
 <%= render_activity activity, :locals => {:extra_var => 42} %>
 ```
 
+####Pagination
+
+For simple pagination you can use the [stream-ruby API](https://github.com/getstream/stream-ruby),
+as follows in your controller:
+
+```ruby
+  StreamRails.feed_manager.get_news_feeds(current_user.id)[:flat] # Returns a Stream::Feed object
+  results = feed.get(limit: 5, offset: 5)['results']
+```
+
 ### Disable model tracking
 
 You can disable model tracking (eg. when you run tests) via StreamRails.configure
