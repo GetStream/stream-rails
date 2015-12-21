@@ -65,13 +65,14 @@ Login with Github on getstream.io and get your ```api_key``` and ```api_secret``
 
 Then you can add the StreamRails configuration in ```config/initializers/stream_rails.rb```
 
-```
+```ruby
 require 'stream_rails'
 
 StreamRails.configure do |config|
   config.api_key     = "YOUR API KEY"
   config.api_secret  = "YOUR API SECRET"
-  config.timeout     = 30
+  config.timeout     = 30                # Optional, defaults to 3
+  config.location    = 'us-east'         # Optional, defaults to 'us-east'
 end
 ```
 
