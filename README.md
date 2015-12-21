@@ -39,6 +39,11 @@ You can check out our example app built using this library on Github [https://gi
   - [Activity extra data](#activity-extra-data)
   - [Activity creation](#activity-creation)
 - [Feed manager](#feed-manager)
+- [Showing the newsfeed](#showing-the-newsfeed)
+  - [Activity enrichment](#activity-enrichment)
+  - [Templating](#templating)
+  - [Pagination](#pagination)
+- [Disable model tracking](#disable-model-tracking)
 - [Running specs](#running-specs)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -355,6 +360,16 @@ eg. adds the extra_var to the partial scope
 
 ```
 <%= render_activity activity, :locals => {:extra_var => 42} %>
+```
+
+####Pagination
+
+For simple pagination you can use the [stream-ruby API](https://github.com/getstream/stream-ruby),
+as follows in your controller:
+
+```ruby
+  StreamRails.feed_manager.get_news_feeds(current_user.id)[:flat] # Returns a Stream::Feed object
+  results = feed.get(limit: 5, offset: 5)['results']
 ```
 
 ### Disable model tracking
