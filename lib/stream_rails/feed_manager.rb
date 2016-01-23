@@ -15,7 +15,7 @@ module StreamRails
     end
 
     def get_news_feeds(user_id)
-      Hash[@news_feeds.map { |k, _v| [k, get_feed(k, user_id)] }]
+      Hash[@news_feeds.map { |feed_name, feed_slug| [feed_name, get_feed(feed_slug, user_id)] }]
     end
 
     def get_notification_feed(user_id)

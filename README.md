@@ -73,6 +73,9 @@ StreamRails.configure do |config|
   config.api_secret  = "YOUR API SECRET"
   config.timeout     = 30                # Optional, defaults to 3
   config.location    = 'us-east'         # Optional, defaults to 'us-east'
+  # If you use custom feed names, e.g.: timeline_flat, timeline_aggregated,
+  # use this, otherwise omit:
+  config.news_feeds = { flat: "timeline_flat", aggregated: "timeline_aggregated" }
 end
 ```
 
