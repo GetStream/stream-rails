@@ -310,6 +310,8 @@ The current user's flat and aggregated feeds will follow the `target_user`'s use
 StreamRails.feed_manager.follow_user(user_id, target_id)
 ```
 
+![](http://i.imgur.com/bLywmPj.png)
+
 ### Showing the newsfeed
 
 ####Activity enrichment
