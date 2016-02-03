@@ -301,7 +301,10 @@ end
 ```
 
 ####Follow a feed
-This is how you create the newsfeeds you need to notify the system about follow relationships. The manager comes with APIs to let a user's news feed follow another user's feed. This code lets the current user's flat and aggregated feeds follow the target_user's personal feed.
+
+In order to populate newsfeeds, you need to notify the system about follow relationships.
+
+The current user's flat and aggregated feeds will follow the `target_user`'s user feed, with the following code:
 
 ```
 StreamRails.feed_manager.follow_user(user_id, target_id)
