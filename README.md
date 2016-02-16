@@ -76,6 +76,9 @@ StreamRails.configure do |config|
   # If you use custom feed names, e.g.: timeline_flat, timeline_aggregated,
   # use this, otherwise omit:
   config.news_feeds = { flat: "timeline_flat", aggregated: "timeline_aggregated" }
+  # Point to the notifications feed group providing the name, omit if you don't
+  # have a notifications feed
+  config.notification_feed = "notifications"
 end
 ```
 
