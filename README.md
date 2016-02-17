@@ -265,7 +265,7 @@ class Pin < ActiveRecord::Base
 
   def activity_notify
     if self.is_retweet
-      [feed_manager.get_notification_feed(self.parent.user_id)]
+      [StreamRails.feed_manager.get_notification_feed(self.parent.user_id)]
     end
   end
 
@@ -290,7 +290,7 @@ class Follow < ActiveRecord::Base
   as_activity
 
   def activity_notify
-    [feed_manager.get_notification_feed(self.target_id)]
+    [StreamRails.feed_manager.get_notification_feed(self.target_id)]
   end
 
   def activity_object
