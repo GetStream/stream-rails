@@ -355,23 +355,28 @@ The ```render_activity``` view helper will render the activity by picking the pa
 The helper will automatically send ```activity``` to the local scope of the partial; additional parameters can be send as well as use different layouts, and prefix the name
 
 
-eg. renders the activity partial using the ```small_activity``` layout.
+e.g. renders the activity partial using the ```small_activity``` layout:
 
 ```
 <%= render_activity activity, :layout => "small_activity" %>
 ```
 
-
-eg. prefixes the name of the template with "notification_"
+e.g. prefixes the name of the template with "notification_":
 
 ```
 <%= render_activity activity, :prefix => "notification_" %>
 ```
 
-eg. adds the extra_var to the partial scope
+e.g. adds the extra_var to the partial scope:
 
 ```
 <%= render_activity activity, :locals => {:extra_var => 42} %>
+```
+
+e.g. renders the activity partial using the `notifications` partial root, which will render the partial with the path `notifications/#{ACTIVITY_VERB}`
+
+```
+<%= render_activity activity, :partial_root => "notifications" %>
 ```
 
 ####Pagination
