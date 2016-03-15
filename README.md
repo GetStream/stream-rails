@@ -76,6 +76,9 @@ StreamRails.configure do |config|
   # If you use custom feed names, e.g.: timeline_flat, timeline_aggregated,
   # use this, otherwise omit:
   config.news_feeds = { flat: "timeline_flat", aggregated: "timeline_aggregated" }
+  # Point to the notifications feed group providing the name, omit if you don't
+  # have a notifications feed
+  config.notification_feed = "notifications"
 end
 ```
 
@@ -265,7 +268,7 @@ class Pin < ActiveRecord::Base
 
   def activity_notify
     if self.is_retweet
-      [feed_manager.get_notification_feed(self.parent.user_id)]
+      [StreamRails.feed_manager.get_notification_feed(self.parent.user_id)]
     end
   end
 
@@ -290,7 +293,7 @@ class Follow < ActiveRecord::Base
   as_activity
 
   def activity_notify
-    [feed_manager.get_notification_feed(self.target_id)]
+    [StreamRails.feed_manager.get_notification_feed(self.target_id)]
   end
 
   def activity_object
@@ -352,23 +355,28 @@ The ```render_activity``` view helper will render the activity by picking the pa
 The helper will automatically send ```activity``` to the local scope of the partial; additional parameters can be send as well as use different layouts, and prefix the name
 
 
-eg. renders the activity partial using the ```small_activity``` layout.
+e.g. renders the activity partial using the ```small_activity``` layout:
 
 ```
 <%= render_activity activity, :layout => "small_activity" %>
 ```
 
-
-eg. prefixes the name of the template with "notification_"
+e.g. prefixes the name of the template with "notification_":
 
 ```
 <%= render_activity activity, :prefix => "notification_" %>
 ```
 
-eg. adds the extra_var to the partial scope
+e.g. adds the extra_var to the partial scope:
 
 ```
 <%= render_activity activity, :locals => {:extra_var => 42} %>
+```
+
+e.g. renders the activity partial using the `notifications` partial root, which will render the partial with the path `notifications/#{ACTIVITY_VERB}`
+
+```
+<%= render_activity activity, :partial_root => "notifications" %>
 ```
 
 ####Pagination
