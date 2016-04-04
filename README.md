@@ -52,11 +52,15 @@ You can check out our example app built using this library on Github [https://gi
 
 You can install ```stream_rails``` as you would any other gem:
 
-```gem install stream_rails```
+```
+gem install stream_rails
+```
 
 or in your Gemfile:
 
-```gem 'stream_rails'```
+```
+gem 'stream_rails'
+```
 
 
 ### Setup
