@@ -32,6 +32,10 @@ class Tweet < BaseModel
     self
   end
 
+  def activity_target
+    self
+  end
+
   def activity_notify
     [StreamRails.feed_manager.get_notification_feed('cesar')]
   end

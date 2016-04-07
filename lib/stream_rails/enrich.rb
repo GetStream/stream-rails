@@ -29,7 +29,7 @@ module StreamRails
 
   class Enrich
     def initialize(fields = nil)
-      @fields = fields || [:actor, :object]
+      @fields = fields || [:actor, :object, :target]
     end
 
     def model_field?(field_value)

@@ -15,7 +15,9 @@ describe 'activity class implementations' do
     instance = @activity_model.new
     instance.should respond_to(:activity_actor_id)
     instance.should respond_to(:activity_verb)
+    instance.should respond_to(:activity_target)
     instance.should respond_to(:activity_object_id)
+    instance.should respond_to(:activity_target_id)
     instance.should respond_to(:activity_notify)
     instance.should respond_to(:activity_extra_data)
     instance.should respond_to(:activity_should_sync?)
@@ -58,6 +60,7 @@ describe 'activity class implementations' do
       activity[:actor].should_not eq nil
       activity[:verb].should_not eq nil
       activity[:object].should_not eq nil
+      activity[:target].should_not eq nil
       activity[:parent_tweet].should eq 1
       activity[:parent_author].should eq 2
       activity[:to].should eq ['notification:cesar']

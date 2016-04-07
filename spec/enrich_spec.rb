@@ -51,6 +51,16 @@ describe 'StreamRails::Enrich' do
       enriched_activity.enriched?.should eq false
     end
 
+    it 'has target field' do
+      instance = create_article
+      activity = instance.create_activity
+      activity[:target] = 'Planet:42'
+      enriched_activity = @enricher.enrich_activities([activity])[0]
+      enriched_activity[:target].should eq 'Planet:42'
+      enriched_activity.enriched?.should eq true
+      enriched_activity.not_enriched_fields.should eq []
+    end
+
     it 'two activity' do
       a1 = create_article
       a2 = create_article

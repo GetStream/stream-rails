@@ -50,6 +50,10 @@ module StreamRails
       fail NotImplementedError, 'Activity models must define `#activity_object`'
     end
 
+    def activity_target
+      nil
+    end
+
     def activity_verb
       self.class.model_name.to_s
     end
@@ -60,6 +64,10 @@ module StreamRails
 
     def activity_foreign_id
       StreamRails.create_reference(self)
+    end
+
+    def activity_target_id
+      StreamRails.create_reference(activity_target) if activity_target
     end
 
     def activity_notify
@@ -83,6 +91,7 @@ module StreamRails
         verb: activity_verb,
         object: activity_object_id,
         foreign_id: activity_foreign_id,
+        target: activity_target_id,
         time: activity_time
       }
       activity[:to] = activity_notify.map(&:id) unless activity_notify.nil?
