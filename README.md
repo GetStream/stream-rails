@@ -82,7 +82,7 @@ StreamRails.configure do |config|
   config.news_feeds = { flat: "timeline_flat", aggregated: "timeline_aggregated" }
   # Point to the notifications feed group providing the name, omit if you don't
   # have a notifications feed
-  config.notification_feed = "notifications"
+  config.notification_feed = "notification"
 end
 ```
 
