@@ -47,7 +47,7 @@ module StreamRails
     end
 
     def activity_object
-      fail NotImplementedError, 'Activity models must define `#activity_object`'
+      fail NotImplementedError, "Activity models must define `#activity_object` - missing on `#{self.class}`"
     end
 
     def activity_target

@@ -44,6 +44,11 @@ class Tweet < BaseModel
   as_activity track_deletes: false
 end
 
+class PoorlyImplementedActivity < BaseModel
+  include StreamRails::Activity
+  as_activity track_deletes: false
+end
+
 module CustomPolicy
   def self.included(base)
     base.before_create :custom_save
