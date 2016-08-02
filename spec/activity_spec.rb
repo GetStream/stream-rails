@@ -80,4 +80,15 @@ describe 'activity class implementations' do
       activity[:object].should_not eq nil
     end
   end
+
+  context 'PoorlyImplementedActivity' do
+    before(:all) { use_model(PoorlyImplementedActivity) }
+    specify { has_activity_methods }
+    specify do
+      activity = PoorlyImplementedActivity.new
+
+      error_message = "Activity models must define `#activity_object` - missing on `PoorlyImplementedActivity`"
+      expect { activity.activity_object }.to raise_error(NotImplementedError, error_message)
+    end
+  end
 end
