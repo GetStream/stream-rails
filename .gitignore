@@ -1,7 +1,10 @@
 *.gem
 coverage/
-*.sublime-workspace
 /tmp
 Gemfile.lock
 gemfiles/*.lock
 .DS_Store
+
+# IDE's and editors
+.idea
+*.sublime-workspace
