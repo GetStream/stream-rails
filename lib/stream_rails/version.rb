@@ -1,3 +1,3 @@
 module StreamRails
-  VERSION = '2.5'
+  VERSION = '2.5.0'
 end
