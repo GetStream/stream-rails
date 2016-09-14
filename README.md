@@ -6,7 +6,7 @@ Stream Rails
 
 This package helps you create activity streams & newsfeeds with Ruby on Rails and [GetStream.io](https://getstream.io).
 
-###Activity Streams & Newsfeeds
+### Activity Streams & Newsfeeds
 
 ![](https://dvqg2dogggmn6.cloudfront.net/images/mood-home.png)
 
