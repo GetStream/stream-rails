@@ -22,7 +22,7 @@ What you can build:
 
 You can check out our example app built using this library on Github [https://github.com/GetStream/Stream-Example-Rails](https://github.com/GetStream/Stream-Example-Rails)
 
-###Table of Contents
+### Table of Contents
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -62,7 +62,6 @@ or in your Gemfile:
 gem 'stream_rails'
 ```
 
-
 ### Setup
 
 Login with Github on getstream.io and get your ```api_key``` and ```api_secret``` from your app configuration (Dashboard screen).
@@ -86,9 +85,9 @@ StreamRails.configure do |config|
 end
 ```
 
-###Supported ORMs
+### Supported ORMs
 
-####ActiveRecord
+#### ActiveRecord
 
 The integration will look as follows:
 
@@ -103,7 +102,7 @@ class Pin < ActiveRecord::Base
 end
 ```
 
-####Sequel
+#### Sequel
 
 Please, use Sequel `~4`.
 
@@ -321,7 +320,7 @@ StreamRails.feed_manager.follow_user(user_id, target_id)
 
 ### Showing the newsfeed
 
-####Activity enrichment
+#### Activity enrichment
 
 When you read data from feeds, a pin activity will look like this:
 
@@ -329,7 +328,8 @@ When you read data from feeds, a pin activity will look like this:
 {"actor": "User:1", "verb": "like", "object": "Item:42"}
 ```
 
-This is far from ready for usage in your template. We call the process of loading the references from the database enrichment. An example is shown below:
+This is far from ready for usage in your template. We call the process of loading the references from the database 
+enrichment. An example is shown below:
 
 ```ruby
 enricher = StreamRails::Enrich.new
@@ -339,7 +339,56 @@ results = feed.get()['results']
 activities = enricher.enrich_activities(results)
 ```
 
-####Templating
+If you have additional metadata in your activity (by overriding `activity_extra_data` in the class where you add the 
+Stream Activity mixin), you can also enrich that field's data by doing the following:
+
+Step One: override the `activity_extra_data` method from our mixin:
+```ruby
+class Pin < ActiveRecord::Base
+  include StreamRails::Activity
+  as_activity
+
+  attr_accessor :extra_data
+
+  def activity_object
+    self.item
+  end
+
+  # override this method to add metadata to your activity
+  def activity_extra_data
+    @extra_data
+  end
+end
+```
+
+Now we'll create a 'pin' object which has a `location` metadata field. In this example, we will also have a 
+`location` table and model, and we set up our metadata in the `extra_data` field. It is important that the 
+symbol of the metadata as well as the value of the meta data match this pattern. The left half of the 
+`string:string` metadata value when split on `:` must also match the name of the model.
+
+We must also tell the enricher to also fetch locations when looking through our activities
+
+```ruby
+boulder = Location.new
+boulder.name = "Boulder, CO"
+boulder.save!
+
+# tell the enricher to also do a lookup on the `location` model
+enricher.add_fields([:location])
+
+pin = Pin.new
+pin.user = @tom
+pin.extra_data = {:location => "location:#{@boulder.id}"}
+```
+
+When we retrieve the activity later, the enrichment process will include our `location` model as well, giving us
+access to attributes and methods of the location model:
+```ruby
+place = activity[:location].name
+# Boulder, CO
+```
+
+#### Templating
 
 Now that you've enriched the activities you can render them in a view.
 For convenience we include a basic view:

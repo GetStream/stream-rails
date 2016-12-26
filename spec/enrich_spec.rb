@@ -6,13 +6,34 @@ describe 'StreamRails::Enrich' do
     @enricher = StreamRails::Enrich.new
     @tom = User.new
     @tom.save!
+
+    @denver = Location.new
+    @denver.name = 'Denver, CO'
+    @denver.save!
   end
 
   def create_article
     instance = Article.new
     instance.user = @tom
+    instance.extra_data = { location: "location:#{@denver.id}" }
     instance.save!
+
+    @enricher.add_fields([:location])
+
     instance
+  end
+
+  describe 'enricher' do
+    describe 'has default settings for enriched fields' do
+      enricher = StreamRails::Enrich.new
+      enricher.fields.should == [:actor, :object, :target]
+    end
+
+    describe 'can add additional settings for enriched fields' do
+      enricher = StreamRails::Enrich.new
+      enricher.add_fields([:location])
+      enricher.fields.should == [:actor, :object, :target, :location]
+    end
   end
 
   describe '.enrich_activities' do
@@ -26,6 +47,9 @@ describe 'StreamRails::Enrich' do
       enriched_activity = @enricher.enrich_activities([activity])[0]
       enriched_activity[:object].should eq instance
       enriched_activity[:actor].should eq @tom
+      enriched_activity[:location].should eq @denver
+      enriched_activity[:location].name.should eq 'Denver, CO'
+
       enriched_activity.enriched?.should eq true
       enriched_activity.not_enriched_fields.should eq []
     end
@@ -37,6 +61,7 @@ describe 'StreamRails::Enrich' do
       enriched_activity = @enricher.enrich_activities([activity])[0]
       enriched_activity[:object].should eq 'Planet:42'
       enriched_activity[:actor].should eq @tom
+      enriched_activity[:location].should eq @denver
       enriched_activity.enriched?.should eq true
     end
 
@@ -75,9 +100,9 @@ describe 'StreamRails::Enrich' do
     end
 
     it 'aggregated activity' do
-      agg1 = { 'activities' => 3.times.map { create_article.create_activity } }
-      agg2 = { 'activities' => 5.times.map { create_article.create_activity } }
-      agg3 = { 'activities' => 2.times.map { create_article.create_activity } }
+      agg1 = { 'activities' => Array.new(3) { create_article.create_activity } }
+      agg2 = { 'activities' => Array.new(5) { create_article.create_activity } }
+      agg3 = { 'activities' => Array.new(2) { create_article.create_activity } }
       enriched = @enricher.enrich_aggregated_activities([agg1, agg2, agg3])
       enriched[0]['activities'].length.should eq agg1['activities'].length
       enriched[1]['activities'].length.should eq agg2['activities'].length

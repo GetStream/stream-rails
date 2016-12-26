@@ -3,6 +3,15 @@ require 'spec_helper'
 require 'spec_database'
 
 describe 'activity class implementations' do
+  before do
+    @tom = User.new
+    @tom.save!
+
+    @denver = Location.new
+    @denver.name = 'Denver, CO'
+    @denver.save!
+  end
+
   def use_model(activity_model)
     @activity_model = activity_model
     ActiveRecord::Migration.create_table activity_model.table_name do |t|
@@ -26,14 +35,22 @@ describe 'activity class implementations' do
 
   def try_delete
     instance = @activity_model.new
-    instance.user = User.new
+    instance.user = @tom
     instance.save!
     instance.destroy
   end
 
+  def build_activity_with_location
+    instance = @activity_model.new
+    instance.user = @tom
+    instance.extra_data = { location: "location:#{@denver.id}" }
+    instance.save!
+    instance.create_activity
+  end
+
   def build_activity
     instance = @activity_model.new
-    instance.user = User.new
+    instance.user = @tom
     instance.save!
     instance.create_activity
   end
@@ -43,7 +60,7 @@ describe 'activity class implementations' do
     specify { has_activity_methods }
     specify { try_delete }
     specify do
-      activity = build_activity
+      activity = build_activity_with_location
       activity[:to].should eq nil
       activity[:actor].should_not eq nil
       activity[:verb].should_not eq nil
@@ -87,7 +104,7 @@ describe 'activity class implementations' do
     specify do
       activity = PoorlyImplementedActivity.new
 
-      error_message = "Activity models must define `#activity_object` - missing on `PoorlyImplementedActivity`"
+      error_message = 'Activity models must define `#activity_object` - missing on `PoorlyImplementedActivity`'
       expect { activity.activity_object }.to raise_error(NotImplementedError, error_message)
     end
   end

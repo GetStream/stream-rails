@@ -15,7 +15,7 @@ module StreamRails
     end
 
     def enriched?
-      @failed_to_enrich.keys.length == 0
+      @failed_to_enrich.keys.length.zero?
     end
 
     def not_enriched_fields
@@ -28,8 +28,14 @@ module StreamRails
   end
 
   class Enrich
+    attr_reader :fields
+
     def initialize(fields = nil)
       @fields = fields || [:actor, :object, :target]
+    end
+
+    def add_fields(new_fields)
+      new_fields.each { |i| @fields << i }
     end
 
     def model_field?(field_value)
@@ -68,7 +74,7 @@ module StreamRails
       model_refs = Hash.new { |h, k| h[k] = {} }
       activities.each do |activity|
         activity.select { |k, _v| @fields.include? k.to_sym }.each do |_field, value|
-          next unless self.model_field?(value)
+          next unless model_field?(value)
           model, id = value.split(':')
           model_refs[model][id] = 0
         end
@@ -83,7 +89,7 @@ module StreamRails
     def inject_objects(activities, objects)
       create_activity_results(activities).each do |activity|
         activity.select { |k, _v| @fields.include? k.to_sym }.each do |field, value|
-          next unless self.model_field?(value)
+          next unless model_field?(value)
           model, id = value.split(':')
           activity[field] = objects[model][id] || value
           activity.track_not_enriched_field(field, value) if objects[model][id].nil?

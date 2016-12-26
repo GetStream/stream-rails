@@ -12,7 +12,7 @@ module StreamRails
             end
           end
         else
-          fail 'Your ORM is not supported'
+          raise 'Your ORM is not supported'
         end
       end
 
@@ -38,7 +38,7 @@ module StreamRails
             end
           end
         else
-          fail 'Your ORM is not supported'
+          raise 'Your ORM is not supported'
         end
       end
 
