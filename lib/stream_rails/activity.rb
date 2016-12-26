@@ -47,7 +47,7 @@ module StreamRails
     end
 
     def activity_object
-      fail NotImplementedError, "Activity models must define `#activity_object` - missing on `#{self.class}`"
+      raise NotImplementedError, "Activity models must define `#activity_object` - missing on `#{self.class}`"
     end
 
     def activity_target
@@ -70,8 +70,7 @@ module StreamRails
       StreamRails.create_reference(activity_target) if activity_target
     end
 
-    def activity_notify
-    end
+    def activity_notify; end
 
     def activity_extra_data
       {}
@@ -95,7 +94,7 @@ module StreamRails
         time: activity_time
       }
       activity[:to] = activity_notify.map(&:id) unless activity_notify.nil?
-      activity.merge(activity_extra_data)
+      activity.merge(activity_extra_data) if activity_extra_data != nil
     end
   end
 end

@@ -28,7 +28,7 @@ describe StreamRails do
     end
 
     it 'should have default feed configs' do
-      feed_configs = StreamRails.config.feed_configs
+      StreamRails.config.feed_configs
     end
   end
 end

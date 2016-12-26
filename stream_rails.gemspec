@@ -6,9 +6,9 @@ Gem::Specification.new do |gem|
   gem.version = StreamRails::VERSION
   gem.platform = Gem::Platform::RUBY
   gem.summary = 'A gem that provides a client interface for getstream.io'
-  gem.email = 'tommaso@getstream.io'
+  gem.email = 'support@getstream.io'
   gem.homepage = 'http://github.com/GetStream/stream-rails'
-  gem.authors = ['Tommaso Barbugli']
+  gem.authors = ['Tommaso Barbugli', 'Ian Douglas']
   gem.has_rdoc = true
   gem.extra_rdoc_files = ['README.md', 'LICENSE']
   gem.files = Dir['lib/**/*']

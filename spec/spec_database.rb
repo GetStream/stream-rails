@@ -1,7 +1,11 @@
 class User < ActiveRecord::Base
 end
-
 ActiveRecord::Migration.create_table :users
+
+class Location < ActiveRecord::Base
+end
+ActiveRecord::Migration.create_table :locations
+ActiveRecord::Migration.add_column(:locations, :name, :string, limit: 60)
 
 class BaseModel < ActiveRecord::Base
   self.abstract_class = true
@@ -13,8 +17,14 @@ class Article < BaseModel
   include StreamRails::Activity
   as_activity
 
+  attr_accessor :extra_data
+
   def activity_object
     self
+  end
+
+  def activity_extra_data
+    @extra_data
   end
 end
 
@@ -54,8 +64,7 @@ module CustomPolicy
     base.before_create :custom_save
   end
 
-  def custom_save
-  end
+  def custom_save; end
 end
 
 class Pin < BaseModel
@@ -88,9 +97,14 @@ class SequelArticle < Sequel::Model
   as_activity
 
   many_to_one :user
+  attr_accessor :extra_data
 
   def activity_object
     self
+  end
+
+  def activity_extra_data
+    @extra_data
   end
 end
 SequelArticle.db = SEQUEL_DB
