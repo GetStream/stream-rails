@@ -6,6 +6,8 @@ matrix:
     - rvm: 1.9.3
       gemfile: gemfiles/Gemfile.rails-3.X
     - rvm: 1.9.3
+      gemfile: gemfiles/Gemfile.rails-4.0
+    - rvm: 1.9.3
       gemfile: gemfiles/Gemfile.rails-4.2
     - rvm: 2.0.0
       gemfile: gemfiles/Gemfile.rails-3.X
@@ -30,5 +32,9 @@ matrix:
   allow_failures:
     - rvm: 1.9.3
       gemfile: gemfiles/Gemfile.rails-4.0
+    - rvm: 1.9.3
+      gemfile: gemfiles/Gemfile.rails-4.2
+    - rvm: 2.0.0
+      gemfile: gemfiles/Gemfile.rails-4.2
     - rvm: 2.3.0
       gemfile: gemfiles/Gemfile.rails-3.0
