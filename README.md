@@ -378,7 +378,7 @@ enricher.add_fields([:location])
 
 pin = Pin.new
 pin.user = @tom
-pin.extra_data = {:location => "location:#{@boulder.id}"}
+pin.extra_data = {:location => "location:#{boulder.id}"}
 ```
 
 When we retrieve the activity later, the enrichment process will include our `location` model as well, giving us
