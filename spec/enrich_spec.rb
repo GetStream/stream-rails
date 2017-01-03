@@ -30,9 +30,37 @@ describe 'StreamRails::Enrich' do
     end
 
     describe 'can add additional settings for enriched fields' do
-      enricher = StreamRails::Enrich.new
-      enricher.add_fields([:location])
-      enricher.fields.should == [:actor, :object, :target, :location]
+      describe 'in the initializer' do
+        describe 'as a flat list' do
+          enricher = StreamRails::Enrich.new([:location])
+          enricher.fields.should == [:actor, :object, :target, :location]
+        end
+
+        describe 'allowing for subreferences' do
+          enricher = StreamRails::Enrich.new([location: [:tweet]])
+          enricher.fields.should == [:actor, :object, :target, location: [:tweet]]
+        end
+      end
+
+      describe 'using add_fields' do
+        describe 'as a flat list' do
+          enricher = StreamRails::Enrich.new
+          enricher.add_fields([:location])
+          enricher.fields.should == [:actor, :object, :target, :location]
+        end
+
+        describe 'as an empty list does not fail' do
+          enricher = StreamRails::Enrich.new
+          enricher.add_fields
+          enricher.fields.should == [:actor, :object, :target]
+        end
+
+        describe 'allowing for subreferences' do
+          enricher = StreamRails::Enrich.new
+          enricher.add_fields([location: [:tweet]])
+          enricher.fields.should == [:actor, :object, :target, location: [:tweet]]
+        end
+      end
     end
   end
 

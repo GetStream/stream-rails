@@ -28,14 +28,19 @@ module StreamRails
   end
 
   class Enrich
-    attr_reader :fields
+    attr_reader :fields, :subreferences
 
     def initialize(fields = nil)
-      @fields = fields || [:actor, :object, :target]
+      @fields = [:actor, :object, :target]
+      if fields
+        fields.each { |i| @fields << i }
+      end
     end
 
-    def add_fields(new_fields)
-      new_fields.each { |i| @fields << i }
+    def add_fields(new_fields = nil)
+      if new_fields
+        new_fields.each { |i| @fields << i }
+      end
     end
 
     def model_field?(field_value)
@@ -73,17 +78,53 @@ module StreamRails
     def collect_references(activities)
       model_refs = Hash.new { |h, k| h[k] = {} }
       activities.each do |activity|
-        activity.select { |k, _v| @fields.include? k.to_sym }.each do |_field, value|
-          next unless model_field?(value)
-          model, id = value.split(':')
-          model_refs[model][id] = 0
+        check_fields = []
+        @fields.each do |field|
+          if !field.is_a?(Hash)
+            check_fields << field
+          else
+            check_fields << field.keys
+          end
+          activity.select { |k, _v| check_fields.include? k.to_sym }.each do |_field, value|
+            $stderr.puts "_field: #{_field}, value: #{value}"
+            next unless model_field?(value)
+            model, id = value.split(':')
+            model_refs[model][id] = 0
+          end
         end
       end
+      $stderr.puts '-----'
+      $stderr.puts model_refs
+      $stderr.puts '-----'
       model_refs
     end
 
+    def retrieve_objects2(references)
+      foo = Hash[references.map { |model, ids| [model, Hash[model.classify.constantize.where(id: ids.keys).map { |i| [i.id.to_s, i] }]] }]
+      $stderr.puts foo
+      foo
+    end
+
     def retrieve_objects(references)
-      Hash[references.map { |model, ids| [model, Hash[model.classify.constantize.where(id: ids.keys).map { |i| [i.id.to_s, i] }]] }]
+      objects = Hash.new
+        references.map do |model, ids|
+          $stderr.puts "#{model} as string: #{@fields.include? model}"
+          $stderr.puts "#{model} as sym: #{@fields.include? model.to_sym}"
+            objects[model] = Hash[model.classify.constantize.where(id: ids.keys).map { |i| [i.id.to_s, i] }]
+    #       # else
+    #       #   @fields.each do |tmp|
+    #       #     if tmp.is_a? Hash
+    #       #       $stderr.puts "I'm in here"
+    #       #       objects[model] = Hash[model.classify.constantize.where(id: ids.keys).includes(tmp[model.to_sym]).map { |i| [i.id.to_s, i] }]
+    #       #     end
+    #       #   end
+    #       else
+    #         $stderr.puts "ruhroh, #{model.to_sym} not found in #{@fields}"
+    #       end
+        end
+      $stderr.puts objects
+      $stderr.puts '------------'
+      objects
     end
 
     def inject_objects(activities, objects)
