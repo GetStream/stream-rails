@@ -86,16 +86,12 @@ module StreamRails
             check_fields << field.keys
           end
           activity.select { |k, _v| check_fields.include? k.to_sym }.each do |_field, value|
-            $stderr.puts "_field: #{_field}, value: #{value}"
             next unless model_field?(value)
             model, id = value.split(':')
             model_refs[model][id] = 0
           end
         end
       end
-      $stderr.puts '-----'
-      $stderr.puts model_refs
-      $stderr.puts '-----'
       model_refs
     end
 
@@ -108,21 +104,20 @@ module StreamRails
     def retrieve_objects(references)
       objects = Hash.new
         references.map do |model, ids|
-          $stderr.puts "#{model} as string: #{@fields.include? model}"
-          $stderr.puts "#{model} as sym: #{@fields.include? model.to_sym}"
+          sub_refs = []
+          @fields.each do |tmp|
+            if tmp.is_a? Hash
+              sub_refs = tmp[model.to_sym]
+            end
+          end
+          if sub_refs.length > 0
+            $stderr.puts "subref lookup on tmp:#{tmp}, model:#{model} includes:#{tmp[model.to_sym]}"
+            objects[model] = Hash[model.classify.constantize.where(id: ids.keys).includes(tmp[model.to_sym]).map { |i| [i.id.to_s, i] }]
+          else
             objects[model] = Hash[model.classify.constantize.where(id: ids.keys).map { |i| [i.id.to_s, i] }]
-    #       # else
-    #       #   @fields.each do |tmp|
-    #       #     if tmp.is_a? Hash
-    #       #       $stderr.puts "I'm in here"
-    #       #       objects[model] = Hash[model.classify.constantize.where(id: ids.keys).includes(tmp[model.to_sym]).map { |i| [i.id.to_s, i] }]
-    #       #     end
-    #       #   end
-    #       else
-    #         $stderr.puts "ruhroh, #{model.to_sym} not found in #{@fields}"
-    #       end
+          end
         end
-      $stderr.puts objects
+      $stderr.puts "objects: #{objects}"
       $stderr.puts '------------'
       objects
     end

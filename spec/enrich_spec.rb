@@ -3,9 +3,21 @@ require 'spec_database'
 
 describe 'StreamRails::Enrich' do
   before do
+    @employee1 = Employee.new
+    @employee1.save!
+
+    @employee2 = Employee.new
+    @employee2.save!
+
     @enricher = StreamRails::Enrich.new
     @tom = User.new
+    @tom.employee = @employee1
     @tom.save!
+
+    @enricher_subref = StreamRails::Enrich.new(user: [:employee])
+    @jane = User.new
+    @jane.employee = @employee2
+    @jane.save!
 
     @denver = Location.new
     @denver.name = 'Denver, CO'
@@ -15,6 +27,21 @@ describe 'StreamRails::Enrich' do
   def create_article
     instance = Article.new
     instance.user = @tom
+    instance.extra_data = { location: "location:#{@denver.id}" }
+    instance.save!
+
+    @enricher.add_fields([:location])
+
+    instance
+  end
+
+  def create_article_subref(round=nil)
+    instance = Article.new
+    if round.nil?
+      instance.user = @jane
+    else
+      instance.user = @tom
+    end
     instance.extra_data = { location: "location:#{@denver.id}" }
     instance.save!
 
@@ -69,17 +96,27 @@ describe 'StreamRails::Enrich' do
       @enricher.enrich_activities([]).should eq []
     end
 
-    it 'one activity' do
-      instance = create_article
-      activity = instance.create_activity
-      enriched_activity = @enricher.enrich_activities([activity])[0]
-      enriched_activity[:object].should eq instance
-      enriched_activity[:actor].should eq @tom
-      enriched_activity[:location].should eq @denver
-      enriched_activity[:location].name.should eq 'Denver, CO'
+    describe 'one activity enriches' do
+      it 'without sub-references' do
+        instance = create_article
+        activity = instance.create_activity
+        enriched_activity = @enricher.enrich_activities([activity])[0]
+        enriched_activity[:object].should eq instance
+        enriched_activity[:actor].should eq @tom
+        enriched_activity[:location].should eq @denver
+        enriched_activity[:location].name.should eq 'Denver, CO'
 
-      enriched_activity.enriched?.should eq true
-      enriched_activity.not_enriched_fields.should eq []
+        enriched_activity.enriched?.should eq true
+        enriched_activity.not_enriched_fields.should eq []
+      end
+      it 'with sub-references' do
+        instance = create_article_subref
+        activity = instance.create_activity
+        enriched_activity = @enricher_subref.enrich_activities([activity])[0]
+        enriched_activity[:actor].should eq @jane
+        enriched_activity.enriched?.should eq true
+        enriched_activity[:actor].employee.should eq @employee2
+      end
     end
 
     it 'non model object field' do
@@ -114,17 +151,37 @@ describe 'StreamRails::Enrich' do
       enriched_activity.not_enriched_fields.should eq []
     end
 
-    it 'two activity' do
-      a1 = create_article
-      a2 = create_article
-      activities = [a1, a2].map(&:create_activity)
-      enriched_activities = @enricher.enrich_activities(activities)
-      enriched_activities[0][:object].should eq a1
-      enriched_activities[1][:object].should eq a2
-      enriched_activities[0].enriched?.should eq true
-      enriched_activities[1].enriched?.should eq true
-      enriched_activities[0].not_enriched_fields.should eq []
-      enriched_activities[1].not_enriched_fields.should eq []
+    describe 'two activity enriches' do
+      it 'without subref lookups' do
+        a1 = create_article
+        a2 = create_article
+        activities = [a1, a2].map(&:create_activity)
+        enriched_activities = @enricher.enrich_activities(activities)
+        enriched_activities[0][:object].should eq a1
+        enriched_activities[1][:object].should eq a2
+        enriched_activities[0].enriched?.should eq true
+        enriched_activities[1].enriched?.should eq true
+        enriched_activities[0].not_enriched_fields.should eq []
+        enriched_activities[1].not_enriched_fields.should eq []
+      end
+      it 'without subref lookups' do
+        a1 = create_article_subref
+        a2 = create_article_subref(2)
+        activities = [a1, a2].map(&:create_activity)
+        enriched_activities = @enricher.enrich_activities(activities)
+        enriched_activities[0][:object].should eq a1
+        enriched_activities[1][:object].should eq a2
+        enriched_activities[0].enriched?.should eq true
+        enriched_activities[1].enriched?.should eq true
+        enriched_activities[0].not_enriched_fields.should eq []
+        enriched_activities[1].not_enriched_fields.should eq []
+
+        enriched_activities[0][:actor].should eq @jane
+        enriched_activities[0][:actor].employee.should eq @employee2
+        enriched_activities[1][:actor].should eq @tom
+        enriched_activities[1][:actor].employee.should eq @employee1
+
+      end
     end
 
     it 'aggregated activity' do

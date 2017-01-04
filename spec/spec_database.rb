@@ -1,6 +1,16 @@
+ActiveRecord::Base.logger = Logger.new(STDOUT)
+
 class User < ActiveRecord::Base
+  belongs_to :employee
 end
-ActiveRecord::Migration.create_table :users
+ActiveRecord::Migration.create_table :users do |t|
+  t.references :employee, index: true, foreign_key: true
+end
+
+class Employee < ActiveRecord::Base
+  has_many :users
+end
+ActiveRecord::Migration.create_table :employees
 
 class Location < ActiveRecord::Base
 end
