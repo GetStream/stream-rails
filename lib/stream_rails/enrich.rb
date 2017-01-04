@@ -30,10 +30,10 @@ module StreamRails
   class Enrich
     attr_reader :fields, :subreferences
 
-    def initialize(fields = nil)
+    def initialize(new_fields = nil)
       @fields = [:actor, :object, :target]
-      if fields
-        fields.each { |i| @fields << i }
+      if new_fields
+        new_fields.each { |i| @fields << i }
       end
     end
 
@@ -96,9 +96,7 @@ module StreamRails
     end
 
     def retrieve_objects2(references)
-      foo = Hash[references.map { |model, ids| [model, Hash[model.classify.constantize.where(id: ids.keys).map { |i| [i.id.to_s, i] }]] }]
-      $stderr.puts foo
-      foo
+      Hash[references.map { |model, ids| [model, Hash[model.classify.constantize.where(id: ids.keys).map { |i| [i.id.to_s, i] }]] }]
     end
 
     def retrieve_objects(references)
@@ -106,19 +104,24 @@ module StreamRails
         references.map do |model, ids|
           sub_refs = []
           @fields.each do |tmp|
-            if tmp.is_a? Hash
-              sub_refs = tmp[model.to_sym]
+            if tmp.is_a? Array
+              tmp.each_with_index do |subref, idx|
+                if subref.is_a? Array
+                  next
+                end
+                if subref.to_s.titlecase == model
+                  tmp[idx+1].each { |subrefs| sub_refs << subrefs }
+                  break
+                end
+              end
             end
           end
           if sub_refs.length > 0
-            $stderr.puts "subref lookup on tmp:#{tmp}, model:#{model} includes:#{tmp[model.to_sym]}"
-            objects[model] = Hash[model.classify.constantize.where(id: ids.keys).includes(tmp[model.to_sym]).map { |i| [i.id.to_s, i] }]
+            objects[model] = Hash[model.classify.constantize.where(id: ids.keys).includes(sub_refs).map { |i| [i.id.to_s, i] }]
           else
             objects[model] = Hash[model.classify.constantize.where(id: ids.keys).map { |i| [i.id.to_s, i] }]
           end
         end
-      $stderr.puts "objects: #{objects}"
-      $stderr.puts '------------'
       objects
     end
 

@@ -60,12 +60,12 @@ describe 'StreamRails::Enrich' do
       describe 'in the initializer' do
         describe 'as a flat list' do
           enricher = StreamRails::Enrich.new([:location])
-          enricher.fields.should == [:actor, :object, :target, :location]
+          enricher.fields.should =~ [:actor, :object, :target, :location]
         end
 
         describe 'allowing for subreferences' do
           enricher = StreamRails::Enrich.new([location: [:tweet]])
-          enricher.fields.should == [:actor, :object, :target, location: [:tweet]]
+          enricher.fields.should =~ [:actor, :object, :target, location: [:tweet]]
         end
       end
 
@@ -168,7 +168,7 @@ describe 'StreamRails::Enrich' do
         a1 = create_article_subref
         a2 = create_article_subref(2)
         activities = [a1, a2].map(&:create_activity)
-        enriched_activities = @enricher.enrich_activities(activities)
+        enriched_activities = @enricher_subref.enrich_activities(activities)
         enriched_activities[0][:object].should eq a1
         enriched_activities[1][:object].should eq a2
         enriched_activities[0].enriched?.should eq true

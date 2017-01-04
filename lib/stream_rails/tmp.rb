@@ -29,3 +29,11 @@ references.map do |model, ids|
 end
 
 puts objects
+
+
+
+[1,2,3,4].each do |f|
+  if f == 2
+    puts f.next
+  end
+end

@@ -1,4 +1,4 @@
-ActiveRecord::Base.logger = Logger.new(STDOUT)
+# ActiveRecord::Base.logger = Logger.new(STDOUT)
 
 class User < ActiveRecord::Base
   belongs_to :employee
