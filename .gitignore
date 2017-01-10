@@ -8,3 +8,5 @@ gemfiles/*.lock
 # IDE's and editors
 .idea
 *.sublime-workspace
+
+test.sh
