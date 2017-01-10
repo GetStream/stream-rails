@@ -18,11 +18,10 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency 'actionpack', '>= 3.0.0'
   gem.add_dependency 'railties', '>= 3.0.0'
-  gem.add_dependency 'stream-ruby', '~> 2.4'
+  gem.add_dependency 'stream-ruby', '~> 2.5'
   gem.add_dependency 'activerecord', '>= 3.0.0'
 
   gem.add_development_dependency 'rake'
-  gem.add_development_dependency 'fakeweb'
   gem.add_development_dependency 'sqlite3'
   gem.add_development_dependency 'rspec', '~> 2.10'
   gem.add_development_dependency 'simplecov', '~> 0.7.1'
