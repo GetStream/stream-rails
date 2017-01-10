@@ -7,13 +7,6 @@ $LOAD_PATH.unshift File.expand_path('../../lib/', __FILE__)
 require 'simplecov'
 SimpleCov.start
 
-# require 'fakeweb'
-# FakeWeb.register_uri(
-#   :any,
-#   %r{https://us-east-api\.getstream\.io/},
-#   body: '{}'
-# )
-
 require 'active_record'
 ActiveRecord::Base.establish_connection(adapter: 'sqlite3',
                                         database: ':memory:')
