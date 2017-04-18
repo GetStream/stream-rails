@@ -142,7 +142,7 @@ end
 ```
 Everytime a Pin is created it will be stored in the feed of the user that created it.  When a Pin instance is deleted, the feed will be removed as well.
 
-####Activity fields
+#### Activity fields
 
 ActiveRecord models are stored in your feeds as activities; Activities are objects that tell the story of a person performing an action on or with an object, in its simplest form, an activity consists of an actor, a verb, and an object. In order for this to happen your models need to implement this methods:
 
@@ -171,7 +171,7 @@ class Pin < ActiveRecord::Base
 end
 ```
 
-####Activity extra data
+#### Activity extra data
 
 Often you'll want to store more data than just the basic fields. You achieve this by implementing ```#activity_extra_data``` in your model.
 
@@ -195,7 +195,7 @@ class Pin < ActiveRecord::Base
 end
 ```
 
-####Activity creation
+#### Activity creation
 
 If you want to control when to create an activity you should implement
 the ```#activity_should_sync?``` method in your model.
@@ -221,7 +221,7 @@ end
 
 This will create an activity only when `self.published` is true.
 
-###Feed manager
+### Feed manager
 
 ```stream_rails``` comes with a Feed Manager class that helps with all common feed operations. You can get an instance of the manager with ```StreamRails.feed_manager```.
 
