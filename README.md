@@ -4,7 +4,11 @@ Stream Rails
 [![image](https://secure.travis-ci.org/GetStream/stream-rails.png?branch=master)](http://travis-ci.org/GetStream/stream-rails)
 [![Gem Version](https://badge.fury.io/rb/stream_rails.svg)](http://badge.fury.io/rb/stream_rails)
 
-This package helps you create activity streams & newsfeeds with Ruby on Rails and [GetStream.io](https://getstream.io).
+[stream-rails](https://github.com/GetStream/stream-rails) is a Ruby on Rails client for [Stream](https://getstream.io/).
+
+You can sign up for a Stream account at https://getstream.io/get_started.
+
+Note there is also a lower level [Ruby - Stream integration](https://github.com/getstream/stream-ruby) library which is suitable for all Ruby applications.
 
 ### Activity Streams & Newsfeeds
 
@@ -328,7 +332,7 @@ When you read data from feeds, a pin activity will look like this:
 {"actor": "User:1", "verb": "like", "object": "Item:42"}
 ```
 
-This is far from ready for usage in your template. We call the process of loading the references from the database 
+This is far from ready for usage in your template. We call the process of loading the references from the database
 enrichment. An example is shown below:
 
 ```ruby
@@ -339,7 +343,7 @@ results = feed.get()['results']
 activities = enricher.enrich_activities(results)
 ```
 
-If you have additional metadata in your activity (by overriding `activity_extra_data` in the class where you add the 
+If you have additional metadata in your activity (by overriding `activity_extra_data` in the class where you add the
 Stream Activity mixin), you can also enrich that field's data by doing the following:
 
 Step One: override the `activity_extra_data` method from our mixin:
@@ -361,9 +365,9 @@ class Pin < ActiveRecord::Base
 end
 ```
 
-Now we'll create a 'pin' object which has a `location` metadata field. In this example, we will also have a 
-`location` table and model, and we set up our metadata in the `extra_data` field. It is important that the 
-symbol of the metadata as well as the value of the meta data match this pattern. The left half of the 
+Now we'll create a 'pin' object which has a `location` metadata field. In this example, we will also have a
+`location` table and model, and we set up our metadata in the `extra_data` field. It is important that the
+symbol of the metadata as well as the value of the meta data match this pattern. The left half of the
 `string:string` metadata value when split on `:` must also match the name of the model.
 
 We must also tell the enricher to also fetch locations when looking through our activities
@@ -459,3 +463,13 @@ From the project root directory:
 ```
 ./bin/run_tests.sh
 ```
+
+### Full documentation and Low level APIs access
+
+When needed you can also use the [low level Ruby API](https://github.com/getstream/stream-ruby) directly. Documentation is available at the [Stream website](https://getstream.io/docs/?language=ruby).
+
+### Copyright and License Information
+
+Copyright (c) 2014-2017 Stream.io Inc, and individual contributors. All rights reserved.
+
+See the file "LICENSE" for information on the history of this software, terms & conditions for usage, and a DISCLAIMER OF ALL WARRANTIES.
