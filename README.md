@@ -146,7 +146,7 @@ end
 ```
 Everytime a Pin is created it will be stored in the feed of the user that created it.  When a Pin instance is deleted, the feed will be removed as well.
 
-####Activity fields
+#### Activity fields
 
 ActiveRecord models are stored in your feeds as activities; Activities are objects that tell the story of a person performing an action on or with an object, in its simplest form, an activity consists of an actor, a verb, and an object. In order for this to happen your models need to implement this methods:
 
@@ -175,7 +175,7 @@ class Pin < ActiveRecord::Base
 end
 ```
 
-####Activity extra data
+#### Activity extra data
 
 Often you'll want to store more data than just the basic fields. You achieve this by implementing ```#activity_extra_data``` in your model.
 
@@ -199,7 +199,7 @@ class Pin < ActiveRecord::Base
 end
 ```
 
-####Activity creation
+#### Activity creation
 
 If you want to control when to create an activity you should implement
 the ```#activity_should_sync?``` method in your model.
@@ -225,7 +225,7 @@ end
 
 This will create an activity only when `self.published` is true.
 
-###Feed manager
+### Feed manager
 
 ```stream_rails``` comes with a Feed Manager class that helps with all common feed operations. You can get an instance of the manager with ```StreamRails.feed_manager```.
 
@@ -233,18 +233,18 @@ This will create an activity only when `self.published` is true.
 feed = StreamRails.feed_manager.get_user_feed(current_user.id)
 ```
 
-####Feeds bundled with feed_manager
+#### Feeds bundled with feed_manager
 
 To get you started the manager has 4 feeds pre-configured. You can add more feeds if your application requires it.
 Feeds are divided into three categories.
 
-#####User feed:
+##### User feed:
 The user feed stores all activities for a user. Think of it as your personal Facebook page. You can easily get this feed from the manager.
 ```ruby
 feed = StreamRails.feed_manager.get_user_feed(current_user.id)
 ```
 
-#####News feeds:
+##### News feeds:
 News feeds store activities from the people you follow.
 There is both a flat newsfeed (similar to twitter) and an aggregated newsfeed (like facebook).
 
@@ -253,7 +253,7 @@ feed = StreamRails.feed_manager.get_news_feeds(current_user.id)[:flat]
 aggregated_feed = StreamRails.feed_manager.get_news_feeds(current_user.id)[:aggregated]
 ```
 
-#####Notification feed:
+##### Notification feed:
 The notification feed can be used to build notification functionality.
 
 ![Notification feed](http://feedly.readthedocs.org/en/latest/_images/fb_notification_system.png)
@@ -310,7 +310,7 @@ class Follow < ActiveRecord::Base
 end
 ```
 
-####Follow a feed
+#### Follow a feed
 
 In order to populate newsfeeds, you need to notify the system about follow relationships.
 
@@ -436,7 +436,7 @@ e.g. renders the activity partial using the `notifications` partial root, which 
 <%= render_activity activity, :partial_root => "notifications" %>
 ```
 
-####Pagination
+#### Pagination
 
 For simple pagination you can use the [stream-ruby API](https://github.com/getstream/stream-ruby),
 as follows in your controller:
@@ -456,7 +456,7 @@ require 'stream_rails'
 StreamRails.enabled = false
 ```
 
-###Running specs
+### Running specs
 
 From the project root directory:
 
