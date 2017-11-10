@@ -76,10 +76,11 @@ Then you can add the StreamRails configuration in ```config/initializers/stream_
 require 'stream_rails'
 
 StreamRails.configure do |config|
-  config.api_key     = "YOUR API KEY"
-  config.api_secret  = "YOUR API SECRET"
-  config.timeout     = 30                # Optional, defaults to 3
-  config.location    = 'us-east'         # Optional, defaults to 'us-east'
+  config.api_key      = "YOUR API KEY"
+  config.api_secret   = "YOUR API SECRET"
+  config.timeout      = 30                  # Optional, defaults to 3
+  config.location     = 'us-east'           # Optional, defaults to 'us-east'
+  config.api_hostname = 'stream-io-api.com' # Optional, defaults to 'stream-io-api.com' 
   # If you use custom feed names, e.g.: timeline_flat, timeline_aggregated,
   # use this, otherwise omit:
   config.news_feeds = { flat: "timeline_flat", aggregated: "timeline_aggregated" }
