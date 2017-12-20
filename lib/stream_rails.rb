@@ -19,7 +19,8 @@ module StreamRails
       config.api_secret,
       config.api_site_id,
       location: config.location,
-      default_timeout: config.timeout
+      default_timeout: config.timeout,
+      api_hostname: config.api_hostname
     )
   end
 
@@ -51,11 +52,12 @@ module StreamRails
   # All available options and their defaults are in the example below:
   # @example Initializer for Rails
   #   StreamRails.configure do |config|
-  #     config.api_key     = "key"
-  #     config.api_secret  = "secret"
-  #     config.api_site_id = "42"
-  #     config.location    = "us-east"
-  #     config.enabled     = true
+  #     config.api_key      = "key"
+  #     config.api_secret   = "secret"
+  #     config.api_site_id  = "42"
+  #     config.location     = "us-east"
+  #     config.api_hostname = "stream-io-api.com"
+  #     config.enabled      = true
   #   end
   def self.configure(&_block)
     yield(config) if block_given?
