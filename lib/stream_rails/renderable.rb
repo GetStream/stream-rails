@@ -25,7 +25,7 @@ module StreamRails
       end
 
       def render_aggregated(activity, context, params)
-        if !activity['activities'].map { |a| !a.enriched? }.all?
+        if !activity['activities'].map { |a| a.respond_to?('enriched?') && a.enriched? }.all?
           context.render params
         else
           first_activity = activity['activities'][0]
