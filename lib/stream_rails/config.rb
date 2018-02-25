@@ -15,7 +15,7 @@ module StreamRails
 
     def initialize
       @enabled    = true
-      @news_feeds = { flat: 'flat', aggregated: 'aggregated' }
+      @news_feeds = { timeline: 'timeline', timeline_aggregated: 'timeline_aggregated' }
       @notification_feed = 'notification'
       @user_feed = 'user'
       @timeout = 3
