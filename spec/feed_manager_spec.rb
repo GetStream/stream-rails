@@ -28,9 +28,9 @@ describe 'StreamRails::FeedManager' do
     specify { feed_manager.get_user_feed(1).id.should eq 'user:1' }
     specify { feed_manager.get_news_feeds(1).should be_an_instance_of Hash }
     specify { feed_manager.get_news_feeds(1)[:timeline].should be_an_instance_of Stream::Feed }
-    specify { feed_manager.get_news_feeds(1)[:timeline].id.should eq 'flat:1' }
+    specify { feed_manager.get_news_feeds(1)[:timeline].id.should eq 'timeline:1' }
     specify { feed_manager.get_news_feeds(1)[:timeline_aggregated].should be_an_instance_of Stream::Feed }
-    specify { feed_manager.get_news_feeds(1)[:timeline_aggregated].id.should eq 'aggregated:1' }
+    specify { feed_manager.get_news_feeds(1)[:timeline_aggregated].id.should eq 'timeline_aggregated:1' }
     specify { feed_manager.get_notification_feed(1).should be_an_instance_of Stream::Feed }
     specify { feed_manager.get_feed('flat', 1).should be_an_instance_of Stream::Feed }
   end
