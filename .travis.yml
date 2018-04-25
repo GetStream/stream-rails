@@ -32,12 +32,11 @@ matrix:
       gemfile: gemfiles/Gemfile.rails-4.2
     - rvm: 2.2.2
       gemfile: gemfiles/Gemfile.rails-5.0
-
     - rvm: 2.3.0
       gemfile: gemfiles/Gemfile.rails-3.X
-    - rvm: 2.3.0
+    - rvm: 2.3.1
       gemfile: gemfiles/Gemfile.rails-4.0
-    - rvm: 2.3.0
+    - rvm: 2.3.1
       gemfile: gemfiles/Gemfile.rails-4.2
     - rvm: 2.3.0
       gemfile: gemfiles/Gemfile.rails-5.0
@@ -46,5 +45,14 @@ matrix:
   allow_failures:
     - rvm: 1.9.3
       gemfile: gemfiles/Gemfile.rails-4.0
-    - rvm: 2.3.0
+    - rvm: 1.9.3
+      gemfile: gemfiles/Gemfile.rails-4.2
+    - rvm: 2.0.0
+      gemfile: gemfiles/Gemfile.rails-4.2
+    - rvm: 2.3.1
       gemfile: gemfiles/Gemfile.rails-3.0
+    - rvm: 2.3.1
+      gemfile: gemfiles/Gemfile.rails-5.0
+    - rvm: 2.4.0-preview2
+      gemfile: gemfiles/Gemfile.rails-5.0
+

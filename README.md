@@ -4,7 +4,11 @@ Stream Rails
 [![image](https://secure.travis-ci.org/GetStream/stream-rails.png?branch=master)](http://travis-ci.org/GetStream/stream-rails)
 [![Gem Version](https://badge.fury.io/rb/stream_rails.svg)](http://badge.fury.io/rb/stream_rails)
 
-This package helps you create activity streams & newsfeeds with Ruby on Rails and [GetStream.io](https://getstream.io).
+[stream-rails](https://github.com/GetStream/stream-rails) is a Ruby on Rails client for [Stream](https://getstream.io/).
+
+You can sign up for a Stream account at https://getstream.io/get_started.
+
+Note there is also a lower level [Ruby - Stream integration](https://github.com/getstream/stream-ruby) library which is suitable for all Ruby applications.
 
 ### Activity Streams & Newsfeeds
 
@@ -72,10 +76,11 @@ Then you can add the StreamRails configuration in ```config/initializers/stream_
 require 'stream_rails'
 
 StreamRails.configure do |config|
-  config.api_key     = "YOUR API KEY"
-  config.api_secret  = "YOUR API SECRET"
-  config.timeout     = 30                # Optional, defaults to 3
-  config.location    = 'us-east'         # Optional, defaults to 'us-east'
+  config.api_key      = "YOUR API KEY"
+  config.api_secret   = "YOUR API SECRET"
+  config.timeout      = 30                  # Optional, defaults to 3
+  config.location     = 'us-east'           # Optional, defaults to 'us-east'
+  config.api_hostname = 'stream-io-api.com' # Optional, defaults to 'stream-io-api.com' 
   # If you use custom feed names, e.g.: timeline_flat, timeline_aggregated,
   # use this, otherwise omit:
   config.news_feeds = { flat: "timeline_flat", aggregated: "timeline_aggregated" }
@@ -142,7 +147,7 @@ end
 ```
 Everytime a Pin is created it will be stored in the feed of the user that created it.  When a Pin instance is deleted, the feed will be removed as well.
 
-####Activity fields
+#### Activity fields
 
 ActiveRecord models are stored in your feeds as activities; Activities are objects that tell the story of a person performing an action on or with an object, in its simplest form, an activity consists of an actor, a verb, and an object. In order for this to happen your models need to implement this methods:
 
@@ -171,7 +176,7 @@ class Pin < ActiveRecord::Base
 end
 ```
 
-####Activity extra data
+#### Activity extra data
 
 Often you'll want to store more data than just the basic fields. You achieve this by implementing ```#activity_extra_data``` in your model.
 
@@ -195,7 +200,7 @@ class Pin < ActiveRecord::Base
 end
 ```
 
-####Activity creation
+#### Activity creation
 
 If you want to control when to create an activity you should implement
 the ```#activity_should_sync?``` method in your model.
@@ -221,7 +226,7 @@ end
 
 This will create an activity only when `self.published` is true.
 
-###Feed manager
+### Feed manager
 
 ```stream_rails``` comes with a Feed Manager class that helps with all common feed operations. You can get an instance of the manager with ```StreamRails.feed_manager```.
 
@@ -229,18 +234,18 @@ This will create an activity only when `self.published` is true.
 feed = StreamRails.feed_manager.get_user_feed(current_user.id)
 ```
 
-####Feeds bundled with feed_manager
+#### Feeds bundled with feed_manager
 
 To get you started the manager has 4 feeds pre-configured. You can add more feeds if your application requires it.
 Feeds are divided into three categories.
 
-#####User feed:
+##### User feed:
 The user feed stores all activities for a user. Think of it as your personal Facebook page. You can easily get this feed from the manager.
 ```ruby
 feed = StreamRails.feed_manager.get_user_feed(current_user.id)
 ```
 
-#####News feeds:
+##### News feeds:
 News feeds store activities from the people you follow.
 There is both a flat newsfeed (similar to twitter) and an aggregated newsfeed (like facebook).
 
@@ -249,7 +254,7 @@ feed = StreamRails.feed_manager.get_news_feeds(current_user.id)[:flat]
 aggregated_feed = StreamRails.feed_manager.get_news_feeds(current_user.id)[:aggregated]
 ```
 
-#####Notification feed:
+##### Notification feed:
 The notification feed can be used to build notification functionality.
 
 ![Notification feed](http://feedly.readthedocs.org/en/latest/_images/fb_notification_system.png)
@@ -306,7 +311,7 @@ class Follow < ActiveRecord::Base
 end
 ```
 
-####Follow a feed
+#### Follow a feed
 
 In order to populate newsfeeds, you need to notify the system about follow relationships.
 
@@ -328,7 +333,7 @@ When you read data from feeds, a pin activity will look like this:
 {"actor": "User:1", "verb": "like", "object": "Item:42"}
 ```
 
-This is far from ready for usage in your template. We call the process of loading the references from the database 
+This is far from ready for usage in your template. We call the process of loading the references from the database
 enrichment. An example is shown below:
 
 ```ruby
@@ -339,7 +344,7 @@ results = feed.get()['results']
 activities = enricher.enrich_activities(results)
 ```
 
-If you have additional metadata in your activity (by overriding `activity_extra_data` in the class where you add the 
+If you have additional metadata in your activity (by overriding `activity_extra_data` in the class where you add the
 Stream Activity mixin), you can also enrich that field's data by doing the following:
 
 Step One: override the `activity_extra_data` method from our mixin:
@@ -361,9 +366,9 @@ class Pin < ActiveRecord::Base
 end
 ```
 
-Now we'll create a 'pin' object which has a `location` metadata field. In this example, we will also have a 
-`location` table and model, and we set up our metadata in the `extra_data` field. It is important that the 
-symbol of the metadata as well as the value of the meta data match this pattern. The left half of the 
+Now we'll create a 'pin' object which has a `location` metadata field. In this example, we will also have a
+`location` table and model, and we set up our metadata in the `extra_data` field. It is important that the
+symbol of the metadata as well as the value of the meta data match this pattern. The left half of the
 `string:string` metadata value when split on `:` must also match the name of the model.
 
 We must also tell the enricher to also fetch locations when looking through our activities
@@ -378,7 +383,7 @@ enricher.add_fields([:location])
 
 pin = Pin.new
 pin.user = @tom
-pin.extra_data = {:location => "location:#{@boulder.id}"}
+pin.extra_data = {:location => "location:#{boulder.id}"}
 ```
 
 When we retrieve the activity later, the enrichment process will include our `location` model as well, giving us
@@ -432,7 +437,7 @@ e.g. renders the activity partial using the `notifications` partial root, which 
 <%= render_activity activity, :partial_root => "notifications" %>
 ```
 
-####Pagination
+#### Pagination
 
 For simple pagination you can use the [stream-ruby API](https://github.com/getstream/stream-ruby),
 as follows in your controller:
@@ -452,10 +457,20 @@ require 'stream_rails'
 StreamRails.enabled = false
 ```
 
-###Running specs
+### Running specs
 
 From the project root directory:
 
 ```
 ./bin/run_tests.sh
 ```
+
+### Full documentation and Low level APIs access
+
+When needed you can also use the [low level Ruby API](https://github.com/getstream/stream-ruby) directly. Documentation is available at the [Stream website](https://getstream.io/docs/?language=ruby).
+
+### Copyright and License Information
+
+Copyright (c) 2014-2017 Stream.io Inc, and individual contributors. All rights reserved.
+
+See the file "LICENSE" for information on the history of this software, terms & conditions for usage, and a DISCLAIMER OF ALL WARRANTIES.

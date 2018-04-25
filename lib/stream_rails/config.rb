@@ -4,6 +4,7 @@ module StreamRails
     attr_accessor :api_key
     attr_accessor :api_secret
     attr_accessor :location
+    attr_accessor :api_hostname
     attr_accessor :api_site_id
     attr_accessor :enabled
     attr_accessor :timeout
@@ -14,7 +15,7 @@ module StreamRails
 
     def initialize
       @enabled    = true
-      @news_feeds = { flat: 'flat', aggregated: 'aggregated' }
+      @news_feeds = { timeline: 'timeline', timeline_aggregated: 'timeline_aggregated' }
       @notification_feed = 'notification'
       @user_feed = 'user'
       @timeout = 3
