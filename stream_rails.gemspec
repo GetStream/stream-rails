@@ -8,7 +8,7 @@ Gem::Specification.new do |gem|
   gem.summary = 'A gem that provides a client interface for getstream.io'
   gem.email = 'support@getstream.io'
   gem.homepage = 'http://github.com/GetStream/stream-rails'
-  gem.authors = ['Tommaso Barbugli', 'Ian Douglas']
+  gem.authors = ['Tommaso Barbugli', 'Ian Douglas', 'Federico Ruggi']
   gem.has_rdoc = true
   gem.extra_rdoc_files = ['README.md', 'LICENSE']
   gem.files = Dir['lib/**/*']

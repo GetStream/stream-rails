@@ -66,6 +66,13 @@ or in your Gemfile:
 gem 'stream_rails'
 ```
 
+This library is tested against and fully supports the following Rails versions:
+- 3.x
+- 4.0
+- 4.2
+- 5.0
+- 5.2
+
 ### Setup
 
 Login with Github on getstream.io and get your ```api_key``` and ```api_secret``` from your app configuration (Dashboard screen).
