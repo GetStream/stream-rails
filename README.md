@@ -350,6 +350,14 @@ feed = StreamRails.feed_manager.get_news_feeds(current_user.id)[:flat]
 results = feed.get()['results']
 activities = enricher.enrich_activities(results)
 ```
+A similar method called enrich_aggregated_activities is available for aggregated feeds.
+```ruby
+enricher = StreamRails::Enrich.new
+
+feed = StreamRails.feed_manager.get_news_feeds(current_user.id)[:aggregated]
+results = feed.get()['results']
+activities = enricher.enrich_aggregated_activities(results)
+```
 
 If you have additional metadata in your activity (by overriding `activity_extra_data` in the class where you add the
 Stream Activity mixin), you can also enrich that field's data by doing the following:
