@@ -423,7 +423,7 @@ For convenience we include a basic view:
 </div>
 ```
 
-The ```render_activity``` view helper will render the activity by picking the partial ```activity/_pin``` for a pin activity, ```aggregated/_follow``` for an aggregated activity with verb follow.
+The ```render_activity``` view helper will render the activity by picking the partial ```activity/_pin``` for a pin activity, ```aggregated_activity/_follow``` for an aggregated activity with verb follow.
 
 The helper will automatically send ```activity``` to the local scope of the partial; additional parameters can be send as well as use different layouts, and prefix the name
 
