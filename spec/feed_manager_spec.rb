@@ -41,8 +41,6 @@ describe 'StreamRails::FeedManager' do
       let(:feed_manager) { StreamRails.feed_manager }
 
       it 'should not call follow/unfollow API' do
-        StreamRails.enabled = false
-
         feed_manager.should_not receive(:get_feed)
         feed_manager.follow_user(1, 2)
 
