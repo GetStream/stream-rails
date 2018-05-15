@@ -83,7 +83,7 @@ module StreamRails
     end
 
     def retrieve_objects(references)
-      Hash[references.map { |model, ids| [model, Hash[model.classify.constantize.where(id: ids.keys).map { |i| [i.id.to_s, i] }]] }]
+      Hash[references.map { |model, ids| [model, Hash[model.classify.constantize.where(model.classify.constantize.primary_key => ids.keys).map { |i| [i.id.to_s, i] }]] }]
     end
 
     def inject_objects(activities, objects)
