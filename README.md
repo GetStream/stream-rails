@@ -341,7 +341,7 @@ When you read data from feeds, a pin activity will look like this:
 ```
 
 This is far from ready for usage in your template. We call the process of loading the references from the database
-enrichment. An example is shown below:
+enrichment. An example for a flat newsfeed is shown below:
 
 ```ruby
 enricher = StreamRails::Enrich.new
@@ -355,6 +355,16 @@ A similar method called enrich_aggregated_activities is available for aggregated
 enricher = StreamRails::Enrich.new
 
 feed = StreamRails.feed_manager.get_news_feeds(current_user.id)[:aggregated]
+results = feed.get()['results']
+activities = enricher.enrich_aggregated_activities(results)
+```
+
+or for an aggregated feed: 
+
+```ruby
+enricher = StreamRails::Enrich.new
+
+feed = StreamRails.feed_manager.get_news_feeds(current_user.id)[:timeline_aggregated]
 results = feed.get()['results']
 activities = enricher.enrich_aggregated_activities(results)
 ```
@@ -423,7 +433,7 @@ For convenience we include a basic view:
 </div>
 ```
 
-The ```render_activity``` view helper will render the activity by picking the partial ```activity/_pin``` for a pin activity, ```aggregated/_follow``` for an aggregated activity with verb follow.
+The ```render_activity``` view helper will render the activity by picking the partial ```activity/_pin``` for a pin activity, ```aggregated_activity/_follow``` for an aggregated activity with verb follow.
 
 The helper will automatically send ```activity``` to the local scope of the partial; additional parameters can be send as well as use different layouts, and prefix the name
 
