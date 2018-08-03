@@ -28,8 +28,8 @@ module StreamRails
 
     module SyncDestroy
       def self.included(base)
-        if base.respond_to? :after_commit
-          base.after_commit :remove_from_feed, on: :destroy
+        if base.respond_to? :before_destroy
+          base.before_destroy :remove_from_feed
         elsif Object.const_defined?('Sequel') && base < Sequel::Model
           base.instance_eval do
             define_method(:before_destroy) do |*args|
