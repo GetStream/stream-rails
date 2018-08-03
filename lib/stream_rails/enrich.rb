@@ -40,10 +40,12 @@ module StreamRails
 
     def model_field?(field_value)
       return false unless field_value.respond_to?('split')
-      bits = field_value.split(':')
-      return false if bits.length < 2
+
+      model, _, id = field_value.rpartition(':')
+      return false unless model.present? && id.present?
+
       begin
-        bits[0].classify.constantize
+        model.classify.constantize
       rescue NameError
         return false
       else
@@ -75,7 +77,7 @@ module StreamRails
       activities.each do |activity|
         activity.select { |k, _v| @fields.include? k.to_sym }.each do |_field, value|
           next unless model_field?(value)
-          model, id = value.split(':')
+          model, _, id = value.rpartition(':')
           model_refs[model][id] = 0
         end
       end
@@ -90,7 +92,7 @@ module StreamRails
       create_activity_results(activities).each do |activity|
         activity.select { |k, _v| @fields.include? k.to_sym }.each do |field, value|
           next unless model_field?(value)
-          model, id = value.split(':')
+          model, _, id = value.rpartition(':')
           activity[field] = objects[model][id] || value
           activity.track_not_enriched_field(field, value) if objects[model][id].nil?
         end
