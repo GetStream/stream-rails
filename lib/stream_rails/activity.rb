@@ -94,7 +94,7 @@ module StreamRails
         time: activity_time
       }
       activity[:to] = activity_notify.map(&:id) unless activity_notify.nil?
-      activity.merge!(activity_extra_data) if activity_extra_data != nil
+      activity.merge!(activity_extra_data || {})
       activity
     end
   end
