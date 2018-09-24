@@ -5,7 +5,7 @@ module StreamRails
   class << self
     def create_reference(record)
       if record.is_a?(ActiveRecord::Base) || (Object.const_defined?('Sequel') && record.is_a?(Sequel::Model))
-        "#{record.class.model_name}:#{record.id}"
+        "#{record.class.model_name.to_s.underscore}:#{record.id}"
       else
         record.to_s unless record.nil?
       end
