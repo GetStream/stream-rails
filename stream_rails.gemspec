@@ -9,7 +9,6 @@ Gem::Specification.new do |gem|
   gem.email = 'support@getstream.io'
   gem.homepage = 'http://github.com/GetStream/stream-rails'
   gem.authors = ['Tommaso Barbugli', 'Ian Douglas', 'Federico Ruggi']
-  gem.has_rdoc = true
   gem.extra_rdoc_files = ['README.md', 'LICENSE']
   gem.files = Dir['lib/**/*']
   gem.license = 'Apache-2.0'
@@ -18,12 +17,12 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency 'actionpack', '>= 3.0.0'
   gem.add_dependency 'railties', '>= 3.0.0'
-  gem.add_dependency 'stream-ruby', '~> 2.6', '>= 2.6.1'
+  gem.add_dependency 'stream-ruby', '~> 3.1'
   gem.add_dependency 'activerecord', '>= 3.0.0'
 
   gem.add_development_dependency 'rake'
-  gem.add_development_dependency 'sqlite3'
-  gem.add_development_dependency 'rspec', '~> 2.10'
-  gem.add_development_dependency 'simplecov', '~> 0.7.1'
-  gem.add_development_dependency 'sequel', '~> 4.29'
+  gem.add_development_dependency 'sqlite3', '~> 1.3.13'
+  gem.add_development_dependency 'rspec', '~> 3.8'
+  gem.add_development_dependency 'simplecov', '~> 0.16.1'
+  gem.add_development_dependency 'sequel', '~> 4.49'
 end

@@ -3,27 +3,17 @@ before_install:
   - gem update bundler
 matrix:
   include:
-    - rvm: 2.0.0
-      gemfile: gemfiles/Gemfile.rails-3.X
-    - rvm: 2.0.0
+    - rvm: 2.2.10
+      gemfile: gemfiles/Gemfile.rails-4.2
+    - rvm: 2.3.8
       gemfile: gemfiles/Gemfile.rails-4.0
-    - rvm: 2.0.0
+    - rvm: 2.3.8
       gemfile: gemfiles/Gemfile.rails-4.2
-    - rvm: 2.1.0
-      gemfile: gemfiles/Gemfile.rails-3.X
-    - rvm: 2.1.0
-      gemfile: gemfiles/Gemfile.rails-4.0
-    - rvm: 2.1.0
-      gemfile: gemfiles/Gemfile.rails-4.2
-    - rvm: 2.2.2
-      gemfile: gemfiles/Gemfile.rails-4.2
-    - rvm: 2.3.1
-      gemfile: gemfiles/Gemfile.rails-4.0
-    - rvm: 2.3.1
-      gemfile: gemfiles/Gemfile.rails-4.2
-    - rvm: 2.5.1
+    - rvm: 2.5.5
       gemfile: gemfiles/Gemfile.rails-5.0
-    - rvm: 2.5.1
+    - rvm: 2.5.5
       gemfile: gemfiles/Gemfile.rails-5.2
-
-
+    - rvm: 2.5.5
+      gemfile: gemfiles/Gemfile.rails-5.2
+    - rvm: 2.6.2
+      gemfile: gemfiles/Gemfile.rails-5.2
