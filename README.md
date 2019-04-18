@@ -162,7 +162,7 @@ ActiveRecord models are stored in your feeds as activities; Activities are objec
 
 **#activity_actor** the actor performing the activity -- this value also provides the feed name and feed ID to which the activity will be added.
 
-For example, let's say a Pin was a polymorphic class that could belong to either a user (e.g. `User` ID: 1) or a company (e.g. `Company` ID: 1). In that instance, the below code would post the pin either to the `user:1` feed or the `company:1` based on its owner.
+For example, let's say a Pin was a polymorphic class that could belong to either a user (e.g. `User` ID: 1) or a company (e.g. `Company` ID: 1). In that instance, the below code would post the pin either to the `user:1` feed or the `company:1` feed based on its owner.
 
 ```ruby
 class Pin < ActiveRecord::Base
