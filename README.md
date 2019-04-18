@@ -159,7 +159,9 @@ Everytime a Pin is created it will be stored in the feed of the user that create
 ActiveRecord models are stored in your feeds as activities; Activities are objects that tell the story of a person performing an action on or with an object, in its simplest form, an activity consists of an actor, a verb, and an object. In order for this to happen your models need to implement this methods:
 
 **#activity_object** the object of the activity (eg. an AR model instance)
-**#activity_actor** the actor performing the activity (defaults to `self.user`)
+
+**#activity_actor** the actor performing the activity -- this value also provides the feed name and feed id to which the activity will be added (defaults to `self.user`)
+
 **#activity_verb** the string representation of the verb (defaults to model class name)
 
 Here's a more complete example of the Pin class:
