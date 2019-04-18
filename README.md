@@ -162,6 +162,30 @@ ActiveRecord models are stored in your feeds as activities; Activities are objec
 
 **#activity_actor** the actor performing the activity -- this value also provides the feed name and feed id to which the activity will be added (defaults to `self.user`)
 
+For example, let's say a Pin was a polymorphic class that could belong to either a user (e.g. User ID 1) or a company (e.g. Company ID 1). In that instance, the below code would post the pin either to the `user:1` feed or the `company:1` based on its owner.
+
+```ruby
+class Pin < ActiveRecord::Base
+  belongs_to :owner, :polymorphic => true
+  belongs_to :item
+
+  include StreamRails::Activity
+  as_activity
+
+  def activity_actor
+    self.owner
+  end
+
+  def activity_object
+    self.item
+  end
+
+end
+```
+
+The `activity_actor` defaults to `self.user`
+
+
 **#activity_verb** the string representation of the verb (defaults to model class name)
 
 Here's a more complete example of the Pin class:
