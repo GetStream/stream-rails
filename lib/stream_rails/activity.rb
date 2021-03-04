@@ -39,7 +39,7 @@ module StreamRails
     end
 
     def activity_owner_feed
-      'user'
+      activity_actor.class.name.downcase
     end
 
     def activity_actor_id

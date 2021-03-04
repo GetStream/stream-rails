@@ -159,7 +159,33 @@ Everytime a Pin is created it will be stored in the feed of the user that create
 ActiveRecord models are stored in your feeds as activities; Activities are objects that tell the story of a person performing an action on or with an object, in its simplest form, an activity consists of an actor, a verb, and an object. In order for this to happen your models need to implement these methods:
 
 **#activity_object** the object of the activity (eg. an AR model instance)
-**#activity_actor** the actor performing the activity (defaults to `self.user`)
+
+**#activity_actor** the actor performing the activity -- this value also provides the feed name and feed ID to which the activity will be added.
+
+For example, let's say a Pin was a polymorphic class that could belong to either a user (e.g. `User` ID: 1) or a company (e.g. `Company` ID: 1). In that instance, the below code would post the pin either to the `user:1` feed or the `company:1` feed based on its owner.
+
+```ruby
+class Pin < ActiveRecord::Base
+  belongs_to :owner, :polymorphic => true
+  belongs_to :item
+
+  include StreamRails::Activity
+  as_activity
+
+  def activity_actor
+    self.owner
+  end
+
+  def activity_object
+    self.item
+  end
+
+end
+```
+
+The `activity_actor` defaults to `self.user`
+
+
 **#activity_verb** the string representation of the verb (defaults to model class name)
 
 Here's a more complete example of the Pin class:
