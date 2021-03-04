@@ -17,7 +17,7 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency 'actionpack', '>= 3.0.0'
   gem.add_dependency 'railties', '>= 3.0.0'
-  gem.add_dependency 'stream-ruby', '~> 3.1'
+  gem.add_dependency 'stream-ruby', '~> 4.0.1'
   gem.add_dependency 'activerecord', '>= 3.0.0'
 
   gem.add_development_dependency 'rake'
