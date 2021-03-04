@@ -514,10 +514,10 @@ From the project root directory:
 
 ### Full documentation and Low level APIs access
 
-When needed you can also use the [low level Ruby API](https://github.com/getstream/stream-ruby) directly. Documentation is available at the [Stream website](https://getstream.io/docs/?language=ruby).
+When needed you can also use the [low level Ruby API](https://github.com/getstream/stream-ruby) directly. Documentation is available at the [Stream website](https://getstream.io/activity-feeds/docs/?language=ruby).
 
 ### Copyright and License Information
 
-Copyright (c) 2014-2017 Stream.io Inc, and individual contributors. All rights reserved.
+Copyright (c) 2014-2021 Stream.io Inc, and individual contributors. All rights reserved.
 
 See the file "LICENSE" for information on the history of this software, terms & conditions for usage, and a DISCLAIMER OF ALL WARRANTIES.
