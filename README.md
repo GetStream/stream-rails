@@ -156,7 +156,7 @@ Everytime a Pin is created it will be stored in the feed of the user that create
 
 #### Activity fields
 
-ActiveRecord models are stored in your feeds as activities; Activities are objects that tell the story of a person performing an action on or with an object, in its simplest form, an activity consists of an actor, a verb, and an object. In order for this to happen your models need to implement this methods:
+ActiveRecord models are stored in your feeds as activities; Activities are objects that tell the story of a person performing an action on or with an object, in its simplest form, an activity consists of an actor, a verb, and an object. In order for this to happen your models need to implement these methods:
 
 **#activity_object** the object of the activity (eg. an AR model instance)
 **#activity_actor** the actor performing the activity (defaults to `self.user`)
@@ -346,7 +346,7 @@ When you read data from feeds, a pin activity will look like this:
 ```
 
 This is far from ready for usage in your template. We call the process of loading the references from the database
-enrichment. An example is shown below:
+"enrichment." An example is shown below:
 
 ```ruby
 enricher = StreamRails::Enrich.new
@@ -356,7 +356,7 @@ results = feed.get()['results']
 activities = enricher.enrich_activities(results)
 ```
 
-A similar method called enrich_aggregated_activities is available for aggregated feeds.
+A similar method called `enrich_aggregated_activities` is available for aggregated feeds.
 
 ```ruby
 enricher = StreamRails::Enrich.new
@@ -434,7 +434,7 @@ For convenience we include a basic view:
 
 The `render_activity` view helper will render the activity by picking the partial `activity/_pin` for a pin activity, `aggregated_activity/_follow` for an aggregated activity with verb follow.
 
-The helper will automatically send `activity` to the local scope of the partial; additional parameters can be send as well as use different layouts, and prefix the name
+The helper will automatically send `activity` to the local scope of the partial; additional parameters can be sent as well as use different layouts, and prefix the name
 
 e.g. renders the activity partial using the `small_activity` layout:
 
