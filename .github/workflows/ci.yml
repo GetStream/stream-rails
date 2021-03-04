@@ -1,0 +1,27 @@
+name: build
+
+on: [pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ruby: [ '2.5', '2.6' ]
+        rails: [ '5.0', '5.2' ]
+    name: Ruby ${{ matrix.ruby }} with Rails ${{ matrix.rails }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+
+      - env:
+          STREAM_API_KEY: ${{ secrets.STREAM_API_KEY }}
+          STREAM_API_SECRET: ${{ secrets.STREAM_API_SECRET }}
+          BUNDLE_GEMFILE: 'gemfiles/Gemfile.rails-${{ matrix.rails }}'
+        run: |
+          gem install bundler
+          bundle install --jobs 4 --retry 3
+          # bundle exec rake rubocop
+          bundle exec rake test
