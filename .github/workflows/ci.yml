@@ -7,8 +7,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ruby: [ '2.5', '2.6' ]
-        rails: [ '5.0', '5.2' ]
+        ruby: [ '2.5', '2.6', '2.7' ]
+        rails: [ '5.0', '5.2', '6.0', '6.1' ]
     name: Ruby ${{ matrix.ruby }} with Rails ${{ matrix.rails }}
     steps:
       - uses: actions/checkout@v2

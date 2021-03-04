@@ -10,7 +10,7 @@ describe 'StreamRails::FeedManager' do
     describe '#created_activity' do
       let(:instance) { Article.new }
       it 'should not create activity' do
-        instance.class_eval do
+        instance.instance_eval do
           def activity_should_sync?
             false
           end
