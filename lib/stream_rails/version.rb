@@ -1,3 +1,3 @@
 module StreamRails
-  VERSION = '2.6.6'.freeze
+  VERSION = '3.0.0'.freeze
 end
