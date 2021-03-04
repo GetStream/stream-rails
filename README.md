@@ -67,8 +67,6 @@ gem 'stream_rails'
 
 This library is tested against and fully supports the following Rails versions:
 
-- 4.0
-- 4.2
 - 5.0
 - 5.2
 
