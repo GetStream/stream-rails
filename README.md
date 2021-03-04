@@ -1,6 +1,6 @@
 # Stream Rails
 
-[![image](https://secure.travis-ci.org/GetStream/stream-rails.png?branch=master)](http://travis-ci.org/GetStream/stream-rails)
+[![build](https://github.com/GetStream/stream-rails/workflows/build/badge.svg)](https://github.com/GetStream/stream-rails/actions)
 [![Gem Version](https://badge.fury.io/rb/stream_rails.svg)](http://badge.fury.io/rb/stream_rails)
 
 [stream-rails](https://github.com/GetStream/stream-rails) is a Ruby on Rails client for [Stream](https://getstream.io/).
