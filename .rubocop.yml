@@ -1,26 +1,34 @@
-Documentation:
+AllCops:
+  DisabledByDefault: false
+  NewCops: enable
+  TargetRubyVersion: 2.5
+
+Layout/LineLength:
   Enabled: false
 
-AccessorMethodName:
+Lint/RedundantCopDisableDirective:
   Enabled: false
 
-TrivialAccessors:
+Metrics/AbcSize:
+  Enabled: false
+Metrics/BlockLength:
+  Enabled: false
+Metrics/ClassLength:
+  Enabled: false
+Metrics/MethodLength:
   Enabled: false
 
-RedundantReturn:
+Naming/AccessorMethodName:
   Enabled: false
 
-ModuleLength:
+Security/Open:
   Enabled: false
 
-Encoding:
-  EnforcedStyle: when_needed
-
-LineLength:
-  Max: 180
-
-MethodLength:
-  Max: 11
-
-Style/RegexpLiteral:
+Style/AccessorGrouping:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
+Style/DoubleCopDisableDirective:
+  Enabled: false
+Style/FrozenStringLiteralComment:
   Enabled: false
