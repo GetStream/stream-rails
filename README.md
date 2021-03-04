@@ -69,6 +69,8 @@ This library is tested against and fully supports the following Rails versions:
 
 - 5.0
 - 5.2
+- 6.0
+- 6.1
 
 ### Setup
 
