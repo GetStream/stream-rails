@@ -5,3 +5,11 @@ gem 'rake'
 gem 'actionpack', '~> 5.2.0'
 gem 'railties', '~> 5.2.0'
 gem 'activerecord', '~> 5.2.0'
+
+group :test do
+  gem 'simplecov', require: false
+end
+
+group :dev do
+  gem 'rubocop', require: true
+end
