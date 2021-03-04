@@ -7,3 +7,11 @@ gem 'railties', '~> 6.1.0'
 gem 'activerecord', '~> 6.1.0'
 
 gem 'sqlite3', '~> 1.4'
+
+group :test do
+  gem 'simplecov', require: false
+end
+
+group :dev do
+  gem 'rubocop', require: true
+end

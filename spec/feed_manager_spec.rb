@@ -36,7 +36,6 @@ describe 'StreamRails::FeedManager' do
   end
 
   context 'follow and unfollow' do
-
     context 'StreamRails disabled' do
       let(:feed_manager) { StreamRails.feed_manager }
 

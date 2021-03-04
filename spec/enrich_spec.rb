@@ -26,13 +26,13 @@ describe 'StreamRails::Enrich' do
   describe 'enricher' do
     describe 'has default settings for enriched fields' do
       enricher = StreamRails::Enrich.new
-      enricher.fields.should == [:actor, :object, :target]
+      enricher.fields.should == %i[actor object target]
     end
 
     describe 'can add additional settings for enriched fields' do
       enricher = StreamRails::Enrich.new
       enricher.add_fields([:location])
-      enricher.fields.should == [:actor, :object, :target, :location]
+      enricher.fields.should == %i[actor object target location]
     end
   end
 

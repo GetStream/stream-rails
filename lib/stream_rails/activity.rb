@@ -7,7 +7,7 @@ module StreamRails
       if record.is_a?(ActiveRecord::Base) || (Object.const_defined?('Sequel') && record.is_a?(Sequel::Model))
         "#{record.class.model_name}:#{record.id}"
       else
-        record.to_s unless record.nil?
+        record&.to_s
       end
     end
   end

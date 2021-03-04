@@ -20,17 +20,17 @@ module StreamRails
           context.render params
         else
           StreamRails.logger.warn "trying to display a non enriched activity #{activity.inspect} #{activity.failed_to_enrich}"
-          return ''
+          ''
         end
       end
 
       def render_aggregated(activity, context, params)
-        if !activity['activities'].map { |a| !a.enriched? }.all?
-          context.render params
-        else
+        if activity['activities'].map { |a| !a.enriched? }.all?
           first_activity = activity['activities'][0]
           StreamRails.logger.warn "trying to display a non enriched activity #{first_activity.inspect} #{first_activity.failed_to_enrich}"
-          return ''
+          ''
+        else
+          context.render params
         end
       end
 
@@ -42,7 +42,7 @@ module StreamRails
 
       def partial_path(activity, aggregated, prefix = '', path = nil, root = nil)
         root ||= (aggregated ? 'aggregated_activity' : 'activity')
-        path ||= "#{activity['verb']}".downcase
+        path ||= (activity['verb']).to_s.downcase
         path = "#{prefix}_#{path}" if prefix
         select_path path, root
       end
@@ -50,8 +50,8 @@ module StreamRails
       def prepare_locals(activity, params)
         locals = params.delete(:locals) || {}
         locals.merge\
-          activity:     activity,
-          parameters:   params
+          activity: activity,
+          parameters: params
       end
 
       private

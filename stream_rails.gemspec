@@ -1,4 +1,4 @@
-$LOAD_PATH.unshift File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift File.expand_path('lib', __dir__)
 require 'stream_rails/version'
 
 Gem::Specification.new do |gem|
@@ -16,13 +16,13 @@ Gem::Specification.new do |gem|
   gem.required_ruby_version = '>= 2.5.5'
 
   gem.add_dependency 'actionpack', '>= 5.0.0'
+  gem.add_dependency 'activerecord', '>= 5.0.0'
   gem.add_dependency 'railties', '>= 5.0.0'
   gem.add_dependency 'stream-ruby', '~> 4.0.1'
-  gem.add_dependency 'activerecord', '>= 5.0.0'
 
   gem.add_development_dependency 'rake'
-  gem.add_development_dependency 'sqlite3', '~> 1.3.13'
   gem.add_development_dependency 'rspec', '~> 3.10'
-  gem.add_development_dependency 'simplecov', '~> 0.16.1'
   gem.add_development_dependency 'sequel', '~> 4.49'
+  gem.add_development_dependency 'simplecov', '~> 0.16.1'
+  gem.add_development_dependency 'sqlite3', '~> 1.3.13'
 end

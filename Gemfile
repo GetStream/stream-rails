@@ -1,4 +1,3 @@
-# A sample Gemfile
 source 'https://rubygems.org'
 
 gemspec
@@ -8,8 +7,5 @@ group :test do
 end
 
 group :dev do
-  gem 'method_source'
-  gem 'pry'
-  gem 'pry-doc'
-  gem 'rubocop', require: false
+  gem 'rubocop', require: true
 end
