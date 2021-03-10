@@ -1,6 +1,6 @@
 # Stream Rails
 
-[![image](https://secure.travis-ci.org/GetStream/stream-rails.png?branch=master)](http://travis-ci.org/GetStream/stream-rails)
+[![build](https://github.com/GetStream/stream-rails/workflows/build/badge.svg)](https://github.com/GetStream/stream-rails/actions)
 [![Gem Version](https://badge.fury.io/rb/stream_rails.svg)](http://badge.fury.io/rb/stream_rails)
 
 [stream-rails](https://github.com/GetStream/stream-rails) is a Ruby on Rails client for [Stream](https://getstream.io/).
@@ -67,10 +67,10 @@ gem 'stream_rails'
 
 This library is tested against and fully supports the following Rails versions:
 
-- 4.0
-- 4.2
 - 5.0
 - 5.2
+- 6.0
+- 6.1
 
 ### Setup
 
@@ -156,10 +156,36 @@ Everytime a Pin is created it will be stored in the feed of the user that create
 
 #### Activity fields
 
-ActiveRecord models are stored in your feeds as activities; Activities are objects that tell the story of a person performing an action on or with an object, in its simplest form, an activity consists of an actor, a verb, and an object. In order for this to happen your models need to implement this methods:
+ActiveRecord models are stored in your feeds as activities; Activities are objects that tell the story of a person performing an action on or with an object, in its simplest form, an activity consists of an actor, a verb, and an object. In order for this to happen your models need to implement these methods:
 
 **#activity_object** the object of the activity (eg. an AR model instance)
-**#activity_actor** the actor performing the activity (defaults to `self.user`)
+
+**#activity_actor** the actor performing the activity -- this value also provides the feed name and feed ID to which the activity will be added.
+
+For example, let's say a Pin was a polymorphic class that could belong to either a user (e.g. `User` ID: 1) or a company (e.g. `Company` ID: 1). In that instance, the below code would post the pin either to the `user:1` feed or the `company:1` feed based on its owner.
+
+```ruby
+class Pin < ActiveRecord::Base
+  belongs_to :owner, :polymorphic => true
+  belongs_to :item
+
+  include StreamRails::Activity
+  as_activity
+
+  def activity_actor
+    self.owner
+  end
+
+  def activity_object
+    self.item
+  end
+
+end
+```
+
+The `activity_actor` defaults to `self.user`
+
+
 **#activity_verb** the string representation of the verb (defaults to model class name)
 
 Here's a more complete example of the Pin class:
@@ -346,7 +372,7 @@ When you read data from feeds, a pin activity will look like this:
 ```
 
 This is far from ready for usage in your template. We call the process of loading the references from the database
-enrichment. An example is shown below:
+"enrichment." An example is shown below:
 
 ```ruby
 enricher = StreamRails::Enrich.new
@@ -356,7 +382,7 @@ results = feed.get()['results']
 activities = enricher.enrich_activities(results)
 ```
 
-A similar method called enrich_aggregated_activities is available for aggregated feeds.
+A similar method called `enrich_aggregated_activities` is available for aggregated feeds.
 
 ```ruby
 enricher = StreamRails::Enrich.new
@@ -434,7 +460,7 @@ For convenience we include a basic view:
 
 The `render_activity` view helper will render the activity by picking the partial `activity/_pin` for a pin activity, `aggregated_activity/_follow` for an aggregated activity with verb follow.
 
-The helper will automatically send `activity` to the local scope of the partial; additional parameters can be send as well as use different layouts, and prefix the name
+The helper will automatically send `activity` to the local scope of the partial; additional parameters can be sent as well as use different layouts, and prefix the name
 
 e.g. renders the activity partial using the `small_activity` layout:
 
@@ -490,10 +516,10 @@ From the project root directory:
 
 ### Full documentation and Low level APIs access
 
-When needed you can also use the [low level Ruby API](https://github.com/getstream/stream-ruby) directly. Documentation is available at the [Stream website](https://getstream.io/docs/?language=ruby).
+When needed you can also use the [low level Ruby API](https://github.com/getstream/stream-ruby) directly. Documentation is available at the [Stream website](https://getstream.io/activity-feeds/docs/?language=ruby).
 
 ### Copyright and License Information
 
-Copyright (c) 2014-2017 Stream.io Inc, and individual contributors. All rights reserved.
+Copyright (c) 2014-2021 Stream.io Inc, and individual contributors. All rights reserved.
 
 See the file "LICENSE" for information on the history of this software, terms & conditions for usage, and a DISCLAIMER OF ALL WARRANTIES.

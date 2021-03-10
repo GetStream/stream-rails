@@ -4,9 +4,11 @@ coverage/
 Gemfile.lock
 gemfiles/*.lock
 .DS_Store
+vendor/
 
-# IDE's and editors
+.bundle
+.envrc
+
 .idea
-*.sublime-workspace
 
 test.sh

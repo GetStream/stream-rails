@@ -10,8 +10,8 @@ module StreamRails
       super
     end
 
-    def from_activity(h)
-      merge(h)
+    def from_activity(from)
+      merge(from)
     end
 
     def enriched?
@@ -31,7 +31,7 @@ module StreamRails
     attr_reader :fields
 
     def initialize(fields = nil)
-      @fields = fields || [:actor, :object, :target]
+      @fields = fields || %i[actor object target]
     end
 
     def add_fields(new_fields)
@@ -47,9 +47,9 @@ module StreamRails
       begin
         model.classify.constantize
       rescue NameError
-        return false
+        false
       else
-        return true
+        true
       end
     end
 
@@ -77,6 +77,7 @@ module StreamRails
       activities.each do |activity|
         activity.select { |k, _v| @fields.include? k.to_sym }.each do |_field, value|
           next unless model_field?(value)
+
           model, _, id = value.rpartition(':')
           model_refs[model][id] = 0
         end
@@ -85,13 +86,18 @@ module StreamRails
     end
 
     def retrieve_objects(references)
-      Hash[references.map { |model, ids| [model, Hash[model.classify.constantize.where(model.classify.constantize.primary_key => ids.keys).map { |i| [i.id.to_s, i] }]] }]
+      references.map do |model, ids|
+        [model, model.classify.constantize.where(model.classify.constantize.primary_key => ids.keys).map do |i|
+          [i.id.to_s, i]
+        end.to_h]
+      end.to_h
     end
 
     def inject_objects(activities, objects)
       create_activity_results(activities).each do |activity|
         activity.select { |k, _v| @fields.include? k.to_sym }.each do |field, value|
           next unless model_field?(value)
+
           model, _, id = value.rpartition(':')
           activity[field] = objects[model][id] || value
           activity.track_not_enriched_field(field, value) if objects[model][id].nil?
@@ -102,7 +108,7 @@ module StreamRails
     private
 
     def create_activity_results(activities)
-      return activities.map { |a| ActivityResult.new.from_activity(a) }
+      activities.map { |a| ActivityResult.new.from_activity(a) }
     end
   end
 end

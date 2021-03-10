@@ -15,7 +15,7 @@ module StreamRails
     end
 
     def get_news_feeds(user_id)
-      Hash[@news_feeds.map { |feed_name, feed_slug| [feed_name, get_feed(feed_slug, user_id)] }]
+      @news_feeds.transform_values { |feed_slug| get_feed(feed_slug, user_id) }
     end
 
     def get_notification_feed(user_id)
@@ -28,6 +28,7 @@ module StreamRails
 
     def follow_user(user_id, target_id)
       return unless StreamRails.enabled?
+
       target_feed = get_user_feed(target_id)
       @news_feeds.each do |_, feed|
         news_feed = get_feed(feed, user_id)
@@ -37,6 +38,7 @@ module StreamRails
 
     def unfollow_user(user_id, target_id)
       return unless StreamRails.enabled?
+
       target_feed = get_user_feed(target_id)
       @news_feeds.each do |_, feed|
         news_feed = get_feed(feed, user_id)
@@ -50,6 +52,7 @@ module StreamRails
 
     def created_activity(instance)
       return unless StreamRails.enabled? && instance.activity_should_sync?
+
       activity = instance.create_activity
       feed = get_owner_feed(instance)
       feed.add_activity(activity)
@@ -57,6 +60,7 @@ module StreamRails
 
     def destroyed_activity(instance)
       return unless StreamRails.enabled?
+
       feed = get_owner_feed(instance)
       feed.remove(instance.activity_foreign_id, foreign_id: true)
     end
