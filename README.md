@@ -115,7 +115,7 @@ end
 
 #### Sequel
 
-Please, use Sequel `~4`.
+Please, use Sequel `~5`.
 
 The integration will look as follows:
 

@@ -83,16 +83,14 @@ end
 require 'sequel'
 SEQUEL_DB = Sequel.sqlite
 
-unless SEQUEL_DB.table_exists?(:sequel_articles)
-  SEQUEL_DB.create_table(:sequel_articles) do
-    primary_key :id
-    Integer :user_id
-    String :title
-    String :body
-  end
+SEQUEL_DB.create_table?(:sequel_articles) do
+  primary_key :id
+  Integer :user_id
+  String :title
+  String :body
 end
 
-class SequelArticle < Sequel::Model
+class SequelArticle < Sequel::Model(SEQUEL_DB)
   include StreamRails::Activity
   as_activity
 
@@ -107,4 +105,3 @@ class SequelArticle < Sequel::Model
     @extra_data
   end
 end
-SequelArticle.db = SEQUEL_DB
