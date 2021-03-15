@@ -23,16 +23,16 @@ describe 'StreamRails::FeedManager' do
 
   context 'instance from StreamRails' do
     let(:feed_manager) { StreamRails.feed_manager }
-    specify { feed_manager.client.should be_an_instance_of Stream::Client }
-    specify { feed_manager.get_user_feed(1).should be_an_instance_of Stream::Feed }
-    specify { feed_manager.get_user_feed(1).id.should eq 'user:1' }
-    specify { feed_manager.get_news_feeds(1).should be_an_instance_of Hash }
-    specify { feed_manager.get_news_feeds(1)[:timeline].should be_an_instance_of Stream::Feed }
-    specify { feed_manager.get_news_feeds(1)[:timeline].id.should eq 'timeline:1' }
-    specify { feed_manager.get_news_feeds(1)[:timeline_aggregated].should be_an_instance_of Stream::Feed }
-    specify { feed_manager.get_news_feeds(1)[:timeline_aggregated].id.should eq 'timeline_aggregated:1' }
-    specify { feed_manager.get_notification_feed(1).should be_an_instance_of Stream::Feed }
-    specify { feed_manager.get_feed('flat', 1).should be_an_instance_of Stream::Feed }
+    specify { expect(feed_manager.client).to be_an_instance_of Stream::Client }
+    specify { expect(feed_manager.get_user_feed(1)).to be_an_instance_of Stream::Feed }
+    specify { expect(feed_manager.get_user_feed(1).id).to eq 'user:1' }
+    specify { expect(feed_manager.get_news_feeds(1)).to be_an_instance_of Hash }
+    specify { expect(feed_manager.get_news_feeds(1)[:timeline]).to be_an_instance_of Stream::Feed }
+    specify { expect(feed_manager.get_news_feeds(1)[:timeline].id).to eq 'timeline:1' }
+    specify { expect(feed_manager.get_news_feeds(1)[:timeline_aggregated]).to be_an_instance_of Stream::Feed }
+    specify { expect(feed_manager.get_news_feeds(1)[:timeline_aggregated].id).to eq 'timeline_aggregated:1' }
+    specify { expect(feed_manager.get_notification_feed(1)).to be_an_instance_of Stream::Feed }
+    specify { expect(feed_manager.get_feed('flat', 1)).to be_an_instance_of Stream::Feed }
   end
 
   context 'follow and unfollow' do
@@ -40,10 +40,10 @@ describe 'StreamRails::FeedManager' do
       let(:feed_manager) { StreamRails.feed_manager }
 
       it 'should not call follow/unfollow API' do
-        feed_manager.should_not receive(:get_feed)
+        expect(feed_manager).not_to receive(:get_feed)
         feed_manager.follow_user(1, 2)
 
-        feed_manager.should_not receive(:get_feed)
+        expect(feed_manager).not_to receive(:get_feed)
         feed_manager.unfollow_user(1, 2)
       end
     end
