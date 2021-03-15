@@ -22,15 +22,15 @@ describe 'activity class implementations' do
 
   def has_activity_methods
     instance = @activity_model.new
-    instance.should respond_to(:activity_actor_id)
-    instance.should respond_to(:activity_verb)
-    instance.should respond_to(:activity_target)
-    instance.should respond_to(:activity_object_id)
-    instance.should respond_to(:activity_target_id)
-    instance.should respond_to(:activity_notify)
-    instance.should respond_to(:activity_extra_data)
-    instance.should respond_to(:activity_should_sync?)
-    instance.should respond_to(:create_activity)
+    expect(instance).to respond_to(:activity_actor_id)
+    expect(instance).to respond_to(:activity_verb)
+    expect(instance).to respond_to(:activity_target)
+    expect(instance).to respond_to(:activity_object_id)
+    expect(instance).to respond_to(:activity_target_id)
+    expect(instance).to respond_to(:activity_notify)
+    expect(instance).to respond_to(:activity_extra_data)
+    expect(instance).to respond_to(:activity_should_sync?)
+    expect(instance).to respond_to(:create_activity)
   end
 
   def try_delete
@@ -61,10 +61,10 @@ describe 'activity class implementations' do
     specify { try_delete }
     specify do
       activity = build_activity_with_location
-      activity[:to].should eq nil
-      activity[:actor].should_not eq nil
-      activity[:verb].should_not eq nil
-      activity[:object].should_not eq nil
+      expect(activity[:to]).to eq nil
+      expect(activity[:actor]).not_to eq nil
+      expect(activity[:verb]).not_to eq nil
+      expect(activity[:object]).not_to eq nil
     end
   end
 
@@ -74,27 +74,27 @@ describe 'activity class implementations' do
     specify { try_delete }
     specify do
       activity = build_activity
-      activity[:actor].should_not eq nil
-      activity[:verb].should_not eq nil
-      activity[:object].should_not eq nil
-      activity[:target].should_not eq nil
-      activity[:parent_tweet].should eq 1
-      activity[:parent_author].should eq 2
-      activity[:to].should eq ['notification:cesar']
+      expect(activity[:actor]).not_to eq nil
+      expect(activity[:verb]).not_to eq nil
+      expect(activity[:object]).not_to eq nil
+      expect(activity[:target]).not_to eq nil
+      expect(activity[:parent_tweet]).to eq 1
+      expect(activity[:parent_author]).to eq 2
+      expect(activity[:to]).to eq ['notification:cesar']
     end
   end
 
   context 'Pin' do
     before(:all) { use_model(Pin) }
     specify { has_activity_methods }
-    specify { @activity_model.new.should respond_to(:custom_save) }
+    specify { expect(@activity_model.new).to respond_to(:custom_save) }
     specify { try_delete }
     specify do
       activity = build_activity
-      activity[:to].should eq nil
-      activity[:actor].should eq 'cesar'
-      activity[:verb].should_not eq nil
-      activity[:object].should_not eq nil
+      expect(activity[:to]).to eq nil
+      expect(activity[:actor]).to eq 'cesar'
+      expect(activity[:verb]).not_to eq nil
+      expect(activity[:object]).not_to eq nil
     end
   end
 
