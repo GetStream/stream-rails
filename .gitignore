@@ -12,3 +12,4 @@ vendor/
 .idea
 
 test.sh
+.envrc
