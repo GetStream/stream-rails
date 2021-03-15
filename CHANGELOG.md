@@ -1,3 +1,9 @@
+## March 15th, 2021 - 3.1.0
+- Add Ruby 3.x support
+- Add support for Sequel 5.x (4.x can still work but not recommended)
+- Upgrade `stream-ruby` and fix delete activity by foreign id call
+- Handle deprecations for rspec `should` vs `expect`
+
 ## March 5rd, 2021 - 3.0.0
 - Drop support Ruby <2.5 and add 2.7.x
 - Drop support Rails <5.0 and Rails 6.x
