@@ -4,7 +4,7 @@ require 'stream_rails/sync_policies'
 module StreamRails
   class << self
     def create_reference(record)
-      if record.is_a?(ActiveRecord::Base) || (Object.const_defined?('Sequel') && record.is_a?(Sequel::Model))
+      if record.is_a?(ActiveRecord::Base) || record.is_a?(Sequel::Model)
         "#{record.class.model_name}:#{record.id}"
       else
         record&.to_s

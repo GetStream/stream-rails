@@ -90,7 +90,7 @@ SEQUEL_DB.create_table?(:sequel_articles) do
   String :body
 end
 
-class SequelArticle < Sequel::Model
+class SequelArticle < Sequel::Model(SEQUEL_DB)
   include StreamRails::Activity
   as_activity
 
@@ -105,4 +105,3 @@ class SequelArticle < Sequel::Model
     @extra_data
   end
 end
-SequelArticle.db = SEQUEL_DB

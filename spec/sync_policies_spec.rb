@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'spec_database'
 
 describe 'StreamRails::SyncPolicies' do
-  describe 'Sequel ORM intregation' do
+  describe 'Sequel ORM integration' do
     describe 'after create hook' do
       it 'should create an activity' do
         SequelArticle.any_instance.should_receive(:add_to_feed)
