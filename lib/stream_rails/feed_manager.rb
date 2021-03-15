@@ -62,7 +62,7 @@ module StreamRails
       return unless StreamRails.enabled?
 
       feed = get_owner_feed(instance)
-      feed.remove(instance.activity_foreign_id, true)
+      feed.remove(instance.activity_foreign_id, foreign_id: true)
     end
   end
 end
