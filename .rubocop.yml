@@ -3,6 +3,9 @@ AllCops:
   NewCops: enable
   TargetRubyVersion: 2.5
 
+Gemspec/RequireMFA:
+  Enabled: false
+
 Layout/LineLength:
   Enabled: false
 
@@ -19,9 +22,6 @@ Metrics/MethodLength:
   Enabled: false
 
 Naming/AccessorMethodName:
-  Enabled: false
-
-Security/Open:
   Enabled: false
 
 Style/AccessorGrouping:

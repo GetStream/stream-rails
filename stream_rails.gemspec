@@ -12,6 +12,12 @@ Gem::Specification.new do |gem|
   gem.extra_rdoc_files = ['README.md', 'LICENSE']
   gem.files = Dir['lib/**/*']
   gem.license = 'Apache-2.0'
+  gem.metadata = {
+    'bug_tracker_uri' => 'https://github.com/GetStream/stream-rails/issues',
+    'changelog_uri' => "https://github.com/GetStream/stream-rails/releases/tag/v#{StreamRails::VERSION}",
+    'documentation_uri' => 'https://getstream.io/activity-feeds/docs/ruby/?language=ruby',
+    'source_code_uri' => 'https://github.com/GetStream/stream-rails'
+  }
 
   gem.required_ruby_version = '>= 2.5.5'
 
@@ -24,5 +30,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rspec', '~> 3.10'
   gem.add_development_dependency 'sequel', '~> 5.42'
   gem.add_development_dependency 'simplecov', '~> 0.16.1'
-  gem.add_development_dependency 'sqlite3', '~> 1.3.13'
+  gem.add_development_dependency 'sqlite3', '~> 1.4.0'
 end

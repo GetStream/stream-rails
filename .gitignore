@@ -4,6 +4,7 @@ coverage/
 Gemfile.lock
 gemfiles/*.lock
 .DS_Store
+.vscode
 vendor/
 
 .bundle
