@@ -3,6 +3,7 @@ coverage/
 /tmp
 Gemfile.lock
 gemfiles/*.lock
+.ruby-version
 .DS_Store
 .vscode
 vendor/
