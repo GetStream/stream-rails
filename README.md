@@ -1,4 +1,4 @@
-# Stream Rails
+# Stream Rails <!-- omit in toc -->
 
 [![build](https://github.com/GetStream/stream-rails/workflows/build/badge.svg)](https://github.com/GetStream/stream-rails/actions)
 [![Gem Version](https://badge.fury.io/rb/stream_rails.svg)](http://badge.fury.io/rb/stream_rails)
@@ -8,6 +8,8 @@
 You can sign up for a Stream account at https://getstream.io/get_started.
 
 Note there is also a lower level [Ruby - Stream integration](https://github.com/getstream/stream-ruby) library which is suitable for all Ruby applications.
+
+> 💡 This is a library for the **Feeds** product. The Chat SDKs can be found [here](https://getstream.io/chat/docs/).
 
 ### Activity Streams & Newsfeeds
 
@@ -30,24 +32,32 @@ You can check out our example app built using this library on Github [https://gi
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [Activity Streams & Newsfeeds](#activity-streams-&-newsfeeds)
+- [Activity Streams & Newsfeeds](#activity-streams--newsfeeds)
+- [Demo](#demo)
 - [Table of Contents](#table-of-contents)
 - [Gem installation](#gem-installation)
 - [Setup](#setup)
 - [Supported ORMs](#supported-orms)
-  - [ActiveRecord](#active-record)
+  - [ActiveRecord](#activerecord)
   - [Sequel](#sequel)
 - [Model configuration](#model-configuration)
   - [Activity fields](#activity-fields)
   - [Activity extra data](#activity-extra-data)
   - [Activity creation](#activity-creation)
 - [Feed manager](#feed-manager)
+  - [Feeds bundled with feed_manager](#feeds-bundled-with-feed_manager)
+    - [User feed:](#user-feed)
+    - [News feeds:](#news-feeds)
+    - [Notification feed:](#notification-feed)
+  - [Follow a feed](#follow-a-feed)
 - [Showing the newsfeed](#showing-the-newsfeed)
   - [Activity enrichment](#activity-enrichment)
   - [Templating](#templating)
   - [Pagination](#pagination)
 - [Disable model tracking](#disable-model-tracking)
 - [Running specs](#running-specs)
+- [Full documentation and Low level APIs access](#full-documentation-and-low-level-apis-access)
+- [Copyright and License Information](#copyright-and-license-information)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
