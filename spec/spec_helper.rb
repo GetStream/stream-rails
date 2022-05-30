@@ -15,10 +15,10 @@ require 'stream'
 require 'stream_rails'
 
 StreamRails.configure do |config|
-  config.api_key      = ENV['STREAM_API_KEY'] || 'YOUR_API_KEY'
-  config.api_secret   = ENV['STREAM_API_SECRET'] || 'YOUR_API_SECRET'
+  config.api_key      = ENV.fetch('STREAM_API_KEY', nil) || 'YOUR_API_KEY'
+  config.api_secret   = ENV.fetch('STREAM_API_SECRET', nil) || 'YOUR_API_SECRET'
   config.api_site_id  = '42'
-  config.location     = ENV['STREAM_REGION'] || 'api'
-  config.api_hostname = ENV['STREAM_API_HOSTNAME']
+  config.location     = ENV.fetch('STREAM_REGION', nil) || 'api'
+  config.api_hostname = ENV.fetch('STREAM_API_HOSTNAME', nil)
   config.enabled      = false
 end
