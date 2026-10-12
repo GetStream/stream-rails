@@ -1,3 +1,5 @@
+> **`stream-rails` is no longer maintained and is archived.** It integrated Feeds v2 with Rails. New projects should use Feeds v3 with [`getstream-ruby`](https://github.com/GetStream/getstream-ruby) (gem `getstream-ruby`). Migration guide: https://getstream.io/activity-feeds/docs/ruby/v2-to-v3-migration/
+
 # Stream Rails <!-- omit in toc -->
 
 [![build](https://github.com/GetStream/stream-rails/workflows/build/badge.svg)](https://github.com/GetStream/stream-rails/actions)
