@@ -1,4 +1,7 @@
-> **`stream-rails` is no longer maintained and is archived.** It integrated Feeds v2 with Rails. New projects should use Feeds v3 with [`getstream-ruby`](https://github.com/GetStream/getstream-ruby) (gem `getstream-ruby`). Migration guide: https://getstream.io/activity-feeds/docs/ruby/v2-to-v3-migration/
+> **`stream-rails` is a Feeds v2 integration for Rails and is now in maintenance mode.** It will continue to
+> receive critical fixes, so it is safe to keep using with a v2 app. New projects should start
+> with Feeds v3 and [`getstream-ruby`](https://github.com/GetStream/getstream-ruby) (gem `getstream-ruby`).
+> Migration guide: https://getstream.io/activity-feeds/docs/ruby/v2-to-v3-migration/
 
 # Stream Rails <!-- omit in toc -->
 
