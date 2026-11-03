@@ -108,4 +108,20 @@ describe 'activity class implementations' do
       expect { activity.activity_object }.to raise_error(NotImplementedError, error_message)
     end
   end
+
+  context 'create_reference without Sequel loaded' do
+    before { hide_const('Sequel') }
+
+    it 'returns nil for a nil record' do
+      expect(StreamRails.create_reference(nil)).to eq nil
+    end
+
+    it 'returns the string form of a non-model record' do
+      expect(StreamRails.create_reference('Item:1')).to eq 'Item:1'
+    end
+
+    it 'returns a reference for an ActiveRecord record' do
+      expect(StreamRails.create_reference(@tom)).to eq "User:#{@tom.id}"
+    end
+  end
 end
